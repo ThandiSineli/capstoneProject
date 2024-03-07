@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/products', getProducts);
 
 // Get product by ID
-router.get('/products/:iditem', getProduct);
+router.get('/products/:iditems', getProduct);
 
 // Add a product
 router.post('/products', addProduct);

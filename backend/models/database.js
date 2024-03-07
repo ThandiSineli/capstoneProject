@@ -8,30 +8,30 @@ const getproducts = async () => {
     return result;
 };
 
-const getproduct = async (iditem) => {
-    const [result] = await pool.query(`SELECT * FROM products WHERE iditem = ?`, [iditem]);
+const getproduct = async (iditems) => {
+    const [result] = await pool.query(`SELECT * FROM products WHERE iditems = ?`, [iditems]);
     return result;
 };
 
-const addproduct = async (iditem, prodName, quantity, amount, category, prodUrl) => {
+const addproduct = async (iditems, prodName, quantity, amount, category,producturl,description) => {
     await pool.query(
-        "INSERT INTO products (iditem, prodName, quantity, amount, Category, prodUrl) VALUES (?,?,?,?,?,?)",
-        [iditem, prodName, quantity, amount, category, prodUrl]
+        "INSERT INTO products (iditems, prodName, quantity, amount, category, producturl,description) VALUES (?,?,?,?,?,?,?)",
+        [iditems, prodName, quantity, amount, category, producturl,description]
     );
     return getproducts();
 };
 
-const deleteproduct = async (iditem) => {
-    await pool.query(`DELETE FROM products WHERE iditem = ?`, [iditem]);
+const deleteproduct = async (iditems) => {
+    await pool.query(`DELETE FROM products WHERE iditems = ?`, [iditems]);
     return getproducts();
 };
 
-const updateproduct = async (prodName, prodUrl, quantity, amount, category, iditem) => {
+const updateproduct = async (iditems, prodName, quantity, amount, category,producturl,description) => {
     await pool.query(`
         UPDATE products
-        SET prodName=?, prodUrl=?, quantity=?, amount=?, category=?
-        WHERE iditem=?
-    `, [prodName, prodUrl, quantity, amount, category, iditem]);
+        SET prodName=?, quantity=?, amount=?, category=? ,producturl=? ,description=?
+        WHERE iditems=?
+    `, [iditems, prodName, quantity, amount, category,producturl,description]);
     return getproducts();
 };
 
@@ -69,7 +69,7 @@ const updateuser = async (Firstname, Lastname, userAge, Gender, userRole, emailA
         UPDATE users 
         SET Firstname=?, Lastname=?, userAge=?, Gender=?, userRole=?, emailAdd=?, userPass=?, userProfile=?
         WHERE idusers=?
-    `, [firstName, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile, idusers]);
+    `, [Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile, idusers]);
     return getusers();
 };
 

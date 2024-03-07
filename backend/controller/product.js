@@ -13,25 +13,25 @@ import {
   
   // Get product by ID
   const getProduct = async (req, res) => {
-    res.send(await getproduct(+req.params.prodID));
+    res.send(await getproduct(+req.params.iditems));
   };
   
   // Add a product
   const addProduct = async (req, res) => {
-    const { prodID, prodName, quantity, amount, category, prodUrl } = req.body;
-    res.send(await addproduct(prodID, prodName, quantity, amount, category, prodUrl));
+    const { iditems, prodName, quantity, amount, category, prodUrl, description } = req.body;
+    res.send(await addproduct(iditems, prodName, quantity, amount, category, prodUrl,description));
   };
   
   // Delete a product
    const deleteProduct = async (req, res) => {
-    res.send(await deleteproduct(req.params.prodID));
+    res.send(await deleteproduct(req.params.iditem));
   };
   
   // Update a product
   let updateProduct = async (req, res) => {
     try {
-      const { prodName, prodUrl, quantity, amount, category } = req.body;
-      await updateproduct(prodName, prodUrl, quantity, amount, category, +req.params.prodID);
+      const { prodName, quantity, amount, category, producturl } = req.body;
+      await updateproduct(prodName, quantity, amount, category,producturl +req.params.iditems);
       res.json(await getproducts());
     } catch (error) {
       console.error(error);
