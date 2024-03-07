@@ -37,13 +37,13 @@ const updateproduct = async (iditems, prodName, quantity, amount, category,produ
 
 // Users logic
 
-const adduser = async (idusers, Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile) => {
+const adduser = async (idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile) => {
     // Hash the password
-    const hashedPassword = await bcrypt.hash(userPass, 10);
+   
 
     await pool.query(
-        "INSERT INTO users (idusers, Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
-        [idusers, Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile]
+        "INSERT INTO users (idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
+        [idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd,userPass, userProfile]
     );
 
     return getusers();

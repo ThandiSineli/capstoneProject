@@ -10,12 +10,14 @@ import {
    
    // Add a user
     const addUser = async (req, res) => {
-     const { idusers, FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+     const { idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
    
      // Hash the password
-     const hashedPassword = await bcrypt.hash(userPass, 10);
+     const hashedPassword =  bcrypt.hash(userPass, 10,async (err, hash) => {
+      if (err) throw err;
+      await adduser(idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, hash, userProfile);
+     })
    
-     await adduser(idusers, FirstName, LastName, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile);
    
      res.json({ msg: 'User added successfully!' });
    };
