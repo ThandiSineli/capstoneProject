@@ -1,30 +1,19 @@
 <template>
-    <div>
-       <footer>
-           <p>&copy; {{ currentYear }}@Tee's Crown Haven</p>
-       </footer>
-    </div>
- </template>
-
- <script>
-   export default {
-       data() {
-           return{
-               currentYear: new Date().getFullYear(),
-           }
-       }
-   }
-</script>
+  <div>
+    <footer style="background-color: #FF69B4; color: #fff; padding: 20px 0;">
+      <p>&copy; {{ currentYear }} Tee's Crown Haven</p>
+    </footer>
+  </div>
+</template>
 
 <style>
-   /* footer {
-        background-color: beige;
-        padding: 10px;
-        text-align: center;
-} */
-
-   footer p {
-        margin: 0;
-        color: black;
+footer {
+  text-align: center;
 }
+
+footer p {
+  margin: 0;
+  font-size: 18px;
+}
+
 </style>

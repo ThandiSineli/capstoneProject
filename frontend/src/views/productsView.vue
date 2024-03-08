@@ -1,50 +1,69 @@
 <template>
-    <div class="product-grid">
-      <div v-for="product in $store.state.products" :key="product.prodID" class="product-card">
-      <!-- <div v-for="item in $store.state.products" :key="item" class="product-card"> -->
-        <h2>{{ product.prodName }}</h2>
-        <p>Quantity: {{ product.quantity }}</p>
-        <p>Price: {{ product.amount }}</p>
-        <p>Category: {{ product.category }}</p>
-        <img :src="product.producturl" alt="Product Image" style="max-width: 100%; height: auto;">
+  <div class="product-grid">
+    <div v-for="product in products" :key="product.prodID" class="product-card">
+      <div class="card-body">
+        <h5 class="card-title">{{ product.prodName }}</h5>
+        <p class="card-text">Quantity: {{ product.quantity }}</p>
+        <p class="card-text">Price: R{{ product.amount }}</p>
+        <p class="card-text">Category: {{ product.category }}</p>
+        <img :src="product.producturl" alt="Product Image" class="card-img-top" style="max-width: 100%; height: 200px; object-fit: cover;">
+        <div class="buttons">
+          <button @click="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+          <button @click="addToWishlist(product)" class="btn btn-secondary">Add to Wishlist</button>
+        </div>
       </div>
-      <!-- <div class="view-more">
-        <router-link :to="{name: 'singleProduct',params:{id: product.prodID}}">View More</router-link>
-      </div> -->
     </div>
-  </template>
-  
-  <script>
-  export default {
-    computed: {
-      products() {
-        this.$store.dispatch('fetchProducts'); 
-      }
-    },
-    mounted() {
-        this.products
-             
-    },
-    methods: {}
-  };
-  </script>
-  
-  <style>
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px; 
-  }
+  </div>
+</template>
 
-  .product-card {
-    border: 1px solid #ccc;
-    padding: 20px;
-  }
+<script>
+export default {
+  computed: {
+    products() {
+      return this.$store.state.products;
+    }
+  },
+  mounted() {
+    this.$store.dispatch('fetchProducts');
+  },
+  methods: {
+    addToCart(product) {
+      console.log('Adding to Cart:', product);
+      // Implement the logic to add the current product to the cart
+      // You can use Vuex or emit an event to notify the parent component
+    },
+    addToWishlist(product) {
+      console.log('Adding to Wishlist:', product);
+      // Implement the logic to add the current product to the wishlist
+      // You can use Vuex or emit an event to notify the parent component
+    },
+  },
+};
+</script>
 
-  
-  .product-card img {
-    margin-top: 10px; 
-    max-height: 150px; 
-    object-fit: cover; 
-  }
+<style>
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.product-card {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.product-card img {
+  margin-top: 10px;
+  max-height: 10000px; /* Adjust the image height as needed */
+  object-fit: cover;
+}
+
+.buttons {
+  margin-top: 10px;
+}
+
+.buttons button {
+  margin-right: 10px;
+}
 </style>

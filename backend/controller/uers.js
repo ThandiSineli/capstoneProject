@@ -32,7 +32,7 @@ import {
    
    // Delete a user
     const deleteUser = async (req, res) => {
-     res.send(await deleteuser(req.params.idusers));
+     res.send(await deleteuser(req.params.idusers)); 
    };
    
    // Update a user

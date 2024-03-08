@@ -36,7 +36,7 @@ export default {
 }
 
 .custom-spinner {
-  border: 6px solid #226c2b; 
+  border: 6px solid #FF69B4;
   border-top: 6px solid black;
   border-radius: 50%;
   width: 80px;
@@ -49,3 +49,4 @@ export default {
   100% { transform: rotate(360deg); }
 }
 </style>
+

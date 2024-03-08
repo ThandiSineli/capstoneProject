@@ -1,31 +1,27 @@
 <template>
-  <navbar/>
-  <Footer/>
-  <spinner/>
- <router-view/>
+  <div id="app">
+    <navbar />
+    <router-view />
+    <footer />
+    <spinner/>
+    
+</div>
 </template>
 
 <script>
-  import Footer from './components/footer.vue';
- import navbar from './components/navbar.vue';
-import Spinner from './components/spinner.vue';
- 
-  export default{
-    components:{
-      navbar,
-      Footer,
-        Spinner,
-     
-     
-    },
-    data() {
-    return {
-      loading: true, // Spinner set to true when loading 
-    };
+import navbar from '@/components/navbar.vue';
+import footer from '@/components/footer.vue';
+import spinner from '@/components/spinner.vue';
+
+export default {
+  components: {
+    navbar,
+    footer,
+    spinner
   },
-    
-  }
+};
 </script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -33,18 +29,21 @@ import Spinner from './components/spinner.vue';
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding-top: 70px; /* Adjust the padding to accommodate the navbar */
 }
 
-
-footer {
-    text-align: center;
-    margin-top: 20px;
-    color: #000000;
-    position: fixed;
-    bottom: 0%;
-    width: 100%;
-    background-color:beige; 
-  }
+@media only screen and (min-width: 768px) {
   
+  #app {
+    padding-top: 0; /* Remove padding for larger screens */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  router-view {
+    flex-grow: 1;
+  }
+}
 
 </style>

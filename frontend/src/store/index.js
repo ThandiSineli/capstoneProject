@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default createStore({
   state: {
-    // Admin: null,
+    Admin: null,
     products: null,
   },
   getters: {},
@@ -11,9 +11,9 @@ export default createStore({
     setProducts(state, data) {
       state.products = data;
     },
-    // setAdmin(state, data){
-    //   state.products = data
-    // }
+    setAdmin(state, data){
+      state.products = data
+    }
   },
   actions: {
     async fetchProducts({ commit }) {
