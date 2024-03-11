@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default createStore({
   state: {
-    Admin: null,
+    admin: null,
     products: null,
   },
   getters: {},
@@ -11,18 +11,15 @@ export default createStore({
     setProducts(state, data) {
       state.products = data;
     },
-    setAdmin(state, data){
-      state.products = data
-    }
+    setAdmin(state, data) {
+      state.admin = data;
+    },
   },
   actions: {
     async fetchProducts({ commit }) {
       try {
         const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/products');
-        console.log(data); 
-       
-          commit("setProducts", data); 
-        
+        commit("setProducts", data);
       } catch (e) {
         console.error(e);
       }

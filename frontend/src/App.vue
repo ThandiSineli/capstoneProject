@@ -1,23 +1,27 @@
 <template>
   <div id="app">
     <navbar />
+    <spinner />
     <router-view />
-    <footer />
-    <spinner/>
-    
-</div>
+     <my-footer /> 
+  </div>
 </template>
 
 <script>
-import navbar from '@/components/navbar.vue';
-import footer from '@/components/footer.vue';
-import spinner from '@/components/spinner.vue';
+import Footer from './components/footer.vue';
+import Navbar from './components/navbar.vue';
+import Spinner from './components/spinner.vue';
 
 export default {
   components: {
-    navbar,
-    footer,
-    spinner
+    'my-footer': Footer, 
+    navbar: Navbar,
+    spinner: Spinner,
+  },
+  data() {
+    return {
+      loading: true,
+    };
   },
 };
 </script>
@@ -29,21 +33,20 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  padding-top: 70px; /* Adjust the padding to accommodate the navbar */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-@media only screen and (min-width: 768px) {
-  
-  #app {
-    padding-top: 0; /* Remove padding for larger screens */
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
 
-  router-view {
-    flex-grow: 1;
-  }
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+router-view {
+  flex-grow: 1;
 }
 
 </style>

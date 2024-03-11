@@ -19,30 +19,30 @@
 
 <style>
 .contact-container {
-  border: 2px solid #ff1493; /* Pink border */
+  border: 2px solid #ff1493; 
   padding: 20px;
   max-width: 600px;
   margin: 20px auto;
   border-radius: 10px;
-  background-color: #fff; /* White background */
+  background-color: #fff; 
 }
 
 .contact-form {
-  background-color: #000; /* Black background */
+  background-color: #000;
   border-radius: 10px;
   padding: 30px;
 }
 
 .contact-form h2 {
   text-align: center;
-  color: #ff1493; /* Pink text color */
+  color: #ff1493; 
   margin-bottom: 20px;
 }
 
 .contact-form form label {
   display: block;
   margin-bottom: 8px;
-  color: #fff; /* White text color */
+  color: #fff; 
   font-weight: bold;
 }
 
@@ -55,7 +55,7 @@
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s ease;
-  color: #000; /* Black text color */
+  color: #000; 
 }
 
 .contact-form form textarea {
@@ -78,6 +78,6 @@
 }
 
 .contact-form form button:hover {
-  background-color: #f6f0eb;
+  background-color: #f8e61f;
 }
 </style>
