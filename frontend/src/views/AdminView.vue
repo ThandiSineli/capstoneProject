@@ -41,12 +41,13 @@ export default {
   },
   methods: {
     async editProduct(product) {
-      // You can implement edit functionality here, like opening a modal or navigating to an edit page
-      console.log("Editing product:", product);
-    },
+  // You can implement edit functionality here, like opening a modal or navigating to an edit page
+  console.log("Editing product:", product);
+  this.$router.push({ name: 'Product', params: {} });
+},
     async deleteProduct(prodID) {
       try {
-        await axios.delete(`http://localhost:3000/products/${prodID}`);
+        await axios.delete(`https://capstoneproject-wv34.onrender.com/products${prodID}`);
         // If successful, update the products list in the store without reloading the page
         this.$store.dispatch('fetchProducts');
       } catch (error) {

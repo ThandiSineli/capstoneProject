@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue';
 import ProductView from '../views/productsView.vue';
 import AdminView from '../views/AdminView.vue';
 import ContactView from '../views/ContactView.vue';
+import SignupView from '../views/SignupView.vue';
+import loginView from '../views/loginView.vue';
 // import SingleProductView from '../views/SingleProductView.vue'
 
 const routes = [
@@ -39,6 +41,16 @@ const routes = [
   //   name: 'singleproduct',
   //   component: SingleProductView
   // },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignupView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component:loginView
+  },
 ]
 
 const router = createRouter({
