@@ -9,6 +9,7 @@
       <input type="password" id="password" v-model="password" required>
 
       <button type="submit">Login</button>
+      <p></p>
     </form>
   </div>
 </template>

@@ -3,15 +3,20 @@
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="https://cdn-thumbs.imagevenue.com/f0/91/a9/ME17RKT1_t.jpg" class="d-block w-100" alt="Slide 1">
+          <img src="https://i.pinimg.com/564x/b2/30/7e/b2307e10016ad3011f1eed65bfe6175f.jpg" class="d-block w-100" alt="Slide 1">
         </div>
         <div class="carousel-item">
-          <img src="https://cdn-thumbs.imagevenue.com/31/77/4c/ME17RL5L_t.png" class="d-block w-100" alt="Slide 2">
+          <img src="https://i.pinimg.com/564x/82/c4/00/82c400d5be4fc129be4b92141472addd.jpg" class="d-block w-100" alt="Slide 2">
         </div>
         <div class="carousel-item">
-          <img src="https://cdn-thumbs.imagevenue.com/71/f6/ac/ME17RLB5_t.jpg" class="d-block w-100" alt="Slide 3">
+          <img src="https://i.pinimg.com/564x/cd/46/43/cd4643dfb0e94cab511c8551f463a6fa.jpg" class="d-block w-100" alt="Slide 3">
         </div>
-        <!-- Add more slides as needed -->
+       <div class="carousel-item">
+          <img src="https://i.pinimg.com/originals/f3/a5/06/f3a506b6312e4f2363297d1988f319b4.jpg" class="d-block w-100" alt="Slide 3">
+        </div>
+        <div class="carousel-item">
+          <img src="https://i.pinimg.com/originals/0c/da/41/0cda4161378319518c9550ccc41eac34.jpg" class="d-block w-100" alt="Slide 3">
+        </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -24,7 +29,7 @@
     </div>
 
 
-    <!-- Bestsellers Section -->
+    <!-- Bestsellers-->
     <div class="homepage">
       <h2 class="mb-4">Bestsellers</h2>
       <div class="product-grid">
@@ -69,17 +74,17 @@ export default {
 
 <style scoped>
 #myCarousel {
-  width: 70%; 
+  width: 90%; 
   margin: auto; 
 }
 
 .carousel-inner {
-  height: 400px; 
+  height: 500px; 
 }
 
 .carousel-item img {
-  width: 100%;
-  height: 100%;
+  width: 150%;
+  height: 650px;
  
 }
 
@@ -88,11 +93,12 @@ export default {
 }
 
 .product-card {
-  width: 50%;
+  width: 1000%;
+  
 }
 
 .card {
-  width: 100%;
+  width: 50%;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s ease;
@@ -103,7 +109,7 @@ export default {
 }
 
 .card-img-top {
-  width: 50%;
+  width: 100%;
   height: auto;
 }
 

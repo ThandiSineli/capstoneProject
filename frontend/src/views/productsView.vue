@@ -41,21 +41,23 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4,1fr);
+  gap: 0px;
 }
 
 .product-card {
   border: 1px solid #ccc;
   padding: 20px;
+  width: 80%;
 }
 
 .product-card img {
-  margin-top: 10px;
-  max-height: 10000px; /* Adjust the image height as needed */
+  margin-top: 1px;
+  max-height: 400px; 
+  max-width: 400px;
   object-fit: cover;
 }
 

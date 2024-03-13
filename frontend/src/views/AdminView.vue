@@ -22,7 +22,7 @@
           <td><img :src="product.producturl" alt="Product Image" class="product-image"></td>
           <td>
             <button class="edit-btn" @click="editProduct(product)">Edit</button>
-            <button class="delete-btn" @click="deleteProduct(product._id)">Delete</button>
+            <button class="delete-btn" @click="deleteProduct(product.id)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -33,6 +33,7 @@
 <script>
 import axios from 'axios';
 
+
 export default {
   computed: {
     products() {
@@ -41,10 +42,9 @@ export default {
   },
   methods: {
     async editProduct(product) {
-  // You can implement edit functionality here, like opening a modal or navigating to an edit page
-  console.log("Editing product:", product);
-  this.$router.push({ name: 'Product', params: {} });
-},
+      // Redirect to an edit page with the product ID
+      this.$router.push({ name: 'editProduct', params: {id: product.id} });
+    },
     async deleteProduct(prodID) {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/products${prodID}`);

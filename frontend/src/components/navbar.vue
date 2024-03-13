@@ -5,19 +5,20 @@
       <h1 class="company-name"><strong style="color: #FF69B4;">Tee's Crown Haven</strong></h1>
     </div>
     <div>
-      <p><i>Your New Look Awaits!!</i></p>
+      <p><i>Your New Look Awaits.</i></p>
     </div>
     <nav class="navbar navbar-light" style="background-color: white;">
       <div class="container-fluid">
-        <!-- Left-side links (Home, Shop, Admin, Login) -->
         <div class="d-flex">
           <router-link to="/" class="nav-link">Home</router-link> 
           <router-link to="/Product" class="nav-link">Shop</router-link> 
           <router-link to="/Admin" class="nav-link">Admin</router-link> 
-          <router-link to="/login" class="nav-link">Login</router-link>
+          <router-link to="/user" class="nav-link">users</router-link> 
         </div>
+  
+         
         
-        <!-- Middle: Search Form -->
+        
         <form class="d-flex mx-auto">
           <input
             v-model="searchQuery"
@@ -33,16 +34,16 @@
           </button>
         </form>
 
-        <!-- Right-side icons (Profile, Wishlist, Cart) -->
+       
         <div class="ms-auto d-flex align-items-center">
-          <!-- Replace these URLs with the actual URLs of your hosted icons -->
-          <router-link to="/profile" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/1c/ff/22/ME17RQHY_t.png" alt="Profile" class="icon-img"></router-link>
+          <router-link to="/login" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/1c/ff/22/ME17RQHY_t.png" alt="Profile" class="icon-img"></router-link>
           <router-link to="/wishlist" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/a3/d8/93/ME17RQIK_t.png" alt="Wishlist" class="icon-img"></router-link>
           <router-link to="/cart" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/75/aa/67/ME17RQHP_t.png" alt="Cart" class="icon-img"></router-link>
         </div>
       </div>
     </nav>
   </div>
+         
 </template>
 
 <style>
@@ -61,7 +62,7 @@
 
 .nav-link {
   margin: 0 10px;
-  color: #0e0e0e; /* Set the text color to white */
+  color: #0e0e0e; 
   text-decoration: none;
   transition: color 0.3s ease;
 }

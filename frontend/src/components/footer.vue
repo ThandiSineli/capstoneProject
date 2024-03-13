@@ -38,11 +38,11 @@
        
            <section class="mb-6">
 
-    <a href="#" role="button" class="icon-button">
+    <a href="https://www.instagram.com/" role="button" class="icon-button">
       <img src="https://cdn-thumbs.imagevenue.com/31/d2/7d/ME17RPTL_t.png" alt="Instagram" />
     </a>   
 
-    <a href="" role="button" class="icon-button">
+    <a href="https://www.facebook.com/" role="button" class="icon-button">
       <img src="https://cdn-thumbs.imagevenue.com/84/c6/72/ME17RPJV_t.png" alt="Facebook" />
     </a>
   </section>
