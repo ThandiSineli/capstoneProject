@@ -30,7 +30,7 @@ export default createStore({
     },
     async fetchUsers({ commit }) {
       try {
-        const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/users');
+        const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/users/');
         commit("setUsers", data);
       } catch (e) {
         console.error(e);

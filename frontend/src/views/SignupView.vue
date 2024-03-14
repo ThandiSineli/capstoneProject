@@ -2,8 +2,20 @@
   <div class="signup-container">
     <h2>Sign Up</h2>
     <form @submit.prevent="signup">
-      <label for="username">Username:</label>
-      <input type="text" id="username" v-model="username" required>
+      <label for="firstname">First Name:</label>
+      <input type="text" id="firstname" v-model="firstname" required>
+
+      <label for="lastname">Last Name:</label>
+      <input type="text" id="lastname" v-model="lastname" required>
+
+      <label for="userage">Age:</label>
+      <input type="number" id="userage" v-model="userage" required>
+
+      <label for="gender">Gender:</label>
+      <select id="gender" v-model="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
 
       <label for="email">Email:</label>
       <input type="email" id="email" v-model="email" required>
@@ -13,22 +25,47 @@
 
       <button type="submit">Sign Up</button>
     </form>
+    <p>Already registered? <router-link to="/login">Login here</router-link>.</p>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
-      username: '',
+      firstname: '',
+      lastname: '',
+      userage: null,
+      gender: 'female',
       email: '',
-      password: ''
+      password: '',
+      errorMessage: ''
     };
   },
   methods: {
-    signup() {
-      // Handle signup logic here
-      console.log('Signing up...');
+    async signup() {
+      try {
+        // Send signup data to backend API
+        const response = await axios.post('https://capstoneproject-wv34.onrender.com/users', {
+          Firstname: this.firstname,
+          Lastname: this.lastname,
+          userage: this.userage,
+          Gender: this.gender,
+          emailAdd: this.email,
+          userPass: this.password
+        });
+        // Handle successful signup
+        console.log('Signup successful:', response.data);
+        // Optionally, you can redirect the user to the login page after successful signup
+        this.$router.push('/login');
+      } catch (error) {
+        // Handle signup error
+        console.error('Signup error:', error);
+        this.errorMessage = 'Failed to signup. Please try again.';
+      }
     }
   }
 };
@@ -54,7 +91,8 @@ label {
   color: #FF69B4;
 }
 
-input {
+input,
+select {
   padding: 8px;
   border: 1px solid #FF69B4;
   border-radius: 4px;
@@ -71,5 +109,9 @@ button {
 
 button:hover {
   background-color: #D84492;
+}
+
+.error-message {
+  color: red;
 }
 </style>

@@ -1,40 +1,37 @@
 <template>
- <table class="user-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Name</th>
-          <th>Surname</th>
-          <th>Age</th>
-          <th>Gender</th>
-          <th>Role</th>
-          <th>Email</th>
-          <th>Password</th>
-          <th>Profile</th>
-          <th>actions</th>
-        </tr>
-      </thead>
-         
-      <tbody>
-        <tr v-for="(user, index) in users" :key="user.idusers" :class="{ 'zebra-stripe': index % 2 === 0 }">
-          <td>{{ index + 1 }}</td>
-          <td><h2>{{ user.Firstname }}</h2></td>
-          <td><p>Surname: {{ user.Lastname }}</p></td>
-          <td><p>Age: {{user.userage }}</p></td>
-          <td><p>Gender: {{ user.Gender }}</p></td>
-          <td><p>Role: {{user.userRole }}</p></td>
-          <td><p>Email: {{ user.emailAdd }}</p></td>
-           <td><p>Password: {{ user.userPass }}</p></td>
-          <td><img :src="user.userProfile" alt="user Image" class="user-image"></td>
-          <td>
-            <button class="edit-btn" @click="editUser(user)">Edit</button>
-            <button class="delete-btn" @click="deleteUser(user.idusers)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
- 
+  <table class="user-table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Profile</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(user, index) in users" :key="user.idusers" :class="{ 'zebra-stripe': index % 2 === 0 }">
+        <td>{{ index + 1 }}</td>
+        <td><h2>{{ user.Firstname }}</h2></td>
+        <td><p>Surname: {{ user.Lastname }}</p></td>
+        <td><p>Age: {{ user.userage }}</p></td>
+        <td><p>Gender: {{ user.Gender }}</p></td>
+        <td><p>Role: {{ user.userRole }}</p></td>
+        <td><p>Email: {{ user.emailAdd }}</p></td>
+        <td><p>Password: {{ user.userPass }}</p></td>
+        <td><img :src="user.userProfile" alt="user Image" class="user-image"></td>
+        <td>
+          <button class="edit-btn" @click="editUser(user)">Edit</button>
+          <button class="delete-btn" @click="deleteUser(user.idusers)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
@@ -48,49 +45,55 @@ export default {
   },
   methods: {
     async editUser(user) {
-
-  this.$router.push({ name: 'edituser', params: {id: user.idusers} });
-},
-    async deleteUser(idusers) {
+      // Navigate to the edit user page with the user's ID
+      this.$router.push({ name: 'edituser', params: { id: user.idusers } });
+    },
+    async deleteUser(userId) {
       try {
-        await axios.delete(`https://capstoneproject-wv34.onrender.com/users${idusers}`);
-        
-    this.$store.dispatch('fetchUsers');
-       
+        await axios.delete(`https://capstoneproject-wv34.onrender.com/users/${userId}`);
+        // After successful deletion, fetch users again to update the list
+        await this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
       }
     },
+    async fetchUsers() {
+      try {
+        const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/users');
+        this.$store.commit('setUsers', data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    },
+  },
+  mounted() {
+    // Fetch users when the component is mounted
+    this.fetchUsers();
   },
 };
 </script>
 
 <style scoped>
-.zebra-stripe {
-  background-color: #ff69b4; 
-}
-
 .user-table {
   width: 100%;
   border-collapse: collapse;
-  color: #645e5e; 
+  color: #000;
 }
 
 .user-table th,
 .user-table td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #000; 
+  border: 2px solid #FF69B4;
 }
 
 .user-table th {
-  background-color: #000; 
+  background-color: #000;
+  color: #FFF;
 }
 
-.user-table .user-image {
-  max-width: 50px;
-  height: auto;
-  border: 2px solid #fff; 
+.zebra-stripe {
+  background-color: #FFF;
 }
 
 .edit-btn,
@@ -103,17 +106,17 @@ export default {
 }
 
 .edit-btn {
-  background-color: #ff69b4; 
-  color: #000; 
+  background-color: #FF69B4;
+  color: #000;
 }
 
 .delete-btn {
-  background-color: #000; 
-  color: #ff69b4; 
+  background-color: #000;
+  color: #FF69B4;
 }
 
 .edit-btn:hover,
 .delete-btn:hover {
-  background-color: #d3d61f; 
+  background-color: #D3D61F;
 }
 </style>
