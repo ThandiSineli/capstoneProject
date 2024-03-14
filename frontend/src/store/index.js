@@ -4,8 +4,9 @@ import axios from "axios";
 export default createStore({
   state: {
     admin: null,
-    products: null,
-    users: null,
+  products: null,
+  users: null,
+  cart: [],
   },
   getters: {},
   mutations: {
@@ -17,6 +18,10 @@ export default createStore({
     },
     setUsers(state, data) {
       state.users = data;
+    },
+    addToCart(state, data) {
+      state.cart.push(data);
+      console.log('Item added to cart:', data); 
     },
   },
   actions: {
@@ -36,6 +41,10 @@ export default createStore({
         console.error(e);
       }
     },
+    addToCart({ commit },data) {
+      commit('addToCart', data);
+    },
   },
+
   modules: {},
 });

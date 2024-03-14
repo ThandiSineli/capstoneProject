@@ -29,12 +29,12 @@
   margin: 0 auto;
   padding: 20px;
   text-align: justify;
-  color: #000; /* Adjust text color based on your theme */
+  color: #000; 
 }
 
 .about-title {
   font-size: 2em;
-  color: #FF69B4; /* Pink color for the title */
+  color: #FF69B4;
 }
 
 .about-description {

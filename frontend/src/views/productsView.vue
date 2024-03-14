@@ -8,7 +8,7 @@
         <p class="card-text">Category: {{ product.category }}</p>
         <img :src="product.producturl" alt="Product Image" class="card-img-top" style="max-width: 100%; height: 200px; object-fit: cover;">
         <div class="buttons">
-          <button @click="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+         <button @click="addToCart(data)" class="btn btn-primary">Add to Cart</button> 
           <button @click="addToWishlist(product)" class="btn btn-secondary">Add to Wishlist</button>
         </div>
       </div>
@@ -21,17 +21,20 @@ export default {
   computed: {
     products() {
       return this.$store.state.products;
-    }
+    },
+    cartItems() {
+    return this.$store.state.cart; 
+  },
+
   },
   mounted() {
     this.$store.dispatch('fetchProducts');
   },
   methods: {
-    addToCart(product) {
-      console.log('Adding to Cart:', product);
-      // Implement the logic to add the current product to the cart
-      // You can use Vuex or emit an event to notify the parent component
-    },
+    addToCart(data) {
+    this.$store.dispatch('addToCart', data);
+    console.log('Adding to Cart:', data); 
+  },
     addToWishlist(product) {
       console.log('Adding to Wishlist:', product);
       // Implement the logic to add the current product to the wishlist

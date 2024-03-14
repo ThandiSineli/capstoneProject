@@ -6,6 +6,7 @@ import ContactView from '../views/ContactView.vue';
 import SignupView from '../views/SignupView.vue';
 import loginView from '../views/loginView.vue';
 import userView from '../views/userView.vue';
+import CheckoutView from '../views/CheckoutView.vue';
 // import SingleProductView from '../views/SingleProductView.vue'
 
 const routes = [
@@ -56,6 +57,11 @@ const routes = [
     path: '/user',
     name: 'user',
     component: userView
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CheckoutView
   },
 ]
 
