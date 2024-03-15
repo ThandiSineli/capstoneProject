@@ -42,13 +42,15 @@ export default {
   },
   methods: {
     async editProduct(product) {
-      // Redirect to an edit page with the product ID
+    //  Dont forget to make Functional
       this.$router.push({ name: 'editProduct', params: {id: product.id} });
     },
+
+    // 
     async deleteProduct(prodID) {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/products${prodID}`);
-        // If successful, update the products list in the store without reloading the page
+       
         this.$store.dispatch('fetchProducts');
       } catch (error) {
         console.error('Error deleting product:', error);
@@ -73,7 +75,7 @@ export default {
 .product-table td {
   padding: 12px;
   text-align: left;
-  border: 1px solid #000; /* Black border */
+  border: 1px solid #000; 
 }
 
 .product-table th {
@@ -96,17 +98,17 @@ export default {
 }
 
 .edit-btn {
-  background-color: #ff69b4; /* Pink background */
-  color: #000; /* Black text color */
+  background-color: #ff69b4; 
+  color: #000;
 }
 
 .delete-btn {
-  background-color: #000; /* Black background */
-  color: #ff69b4; /* Pink text color */
+  background-color: #000; 
+  color: #ff69b4; 
 }
 
 .edit-btn:hover,
 .delete-btn:hover {
-  background-color: #d3d61f; /* Yellow on hover */
+  background-color: #d3d61f; 
 }
 </style>
