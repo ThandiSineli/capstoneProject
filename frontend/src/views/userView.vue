@@ -51,7 +51,7 @@ export default {
     async deleteUser(userId) {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/users/${userId}`);
-        // After successful deletion, fetch users again to update the list
+        
         await this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);

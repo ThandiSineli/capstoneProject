@@ -13,16 +13,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(product, index) in products" :key="product.id" :class="{ 'zebra-stripe': index % 2 === 0 }">
+        <tr v-for="(product, index) in products" :key="product.prodID" :class="{ 'zebra-stripe': index % 2 === 0 }">
           <td>{{ index + 1 }}</td>
           <td><h2>{{ product.prodName }}</h2></td>
-          <td><p>Quantity: {{ product.quantity }}</p></td>
-          <td><p>Price: {{ product.amount }}</p></td>
-          <td><p>Category: {{ product.category }}</p></td>
+          <td><p> {{ product.quantity }}</p></td>
+          <td><p> R{{ product.amount }}</p></td>
+          <td><p> {{ product.category }}</p></td>
           <td><img :src="product.producturl" alt="Product Image" class="product-image"></td>
           <td>
             <button class="edit-btn" @click="editProduct(product)">Edit</button>
-            <button class="delete-btn" @click="deleteProduct(product.id)">Delete</button>
+            <button class="delete-btn" @click="deleteProduct(product.prodID)">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -42,73 +42,35 @@ export default {
   },
   methods: {
     async editProduct(product) {
-    //  Dont forget to make Functional
-      this.$router.push({ name: 'editProduct', params: {id: product.id} });
+      
+      this.$router.push({ name: 'editproduct', params: { id: product.prodID } });
     },
-
-    // 
     async deleteProduct(prodID) {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/products${prodID}`);
-       
-        this.$store.dispatch('fetchProducts');
+        
+        await this.fetchProducts();
       } catch (error) {
         console.error('Error deleting product:', error);
       }
     },
+    async fetchProducts() {
+      try {
+        const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/products');
+        this.$store.commit('setProducts', data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    },
+  },
+  mounted() {
+   
+    this.fetchProducts();
   },
 };
 </script>
 
 <style>
-.zebra-stripe {
-  background-color: #ff69b4; 
-}
 
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: #645e5e; 
-}
-
-.product-table th,
-.product-table td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #000; 
-}
-
-.product-table th {
-  background-color: #000; 
-}
-
-.product-table .product-image {
-  max-width: 50px;
-  height: auto;
-  border: 2px solid #fff; 
-}
-
-.edit-btn,
-.delete-btn {
-  padding: 8px 12px;
-  margin-right: 5px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.edit-btn {
-  background-color: #ff69b4; 
-  color: #000;
-}
-
-.delete-btn {
-  background-color: #000; 
-  color: #ff69b4; 
-}
-
-.edit-btn:hover,
-.delete-btn:hover {
-  background-color: #d3d61f; 
-}
 </style>
+
