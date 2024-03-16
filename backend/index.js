@@ -1,35 +1,29 @@
 import express from 'express';
 import cors from 'cors';
-import { config } from 'dotenv';
 import cookieParser from 'cookie-parser';
-import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/usersRoutes.js';
-import authRoutes from './routes/authRoutes.js';
-// import authenticate from './middleware/middleware.js';
+import { config } from 'dotenv';
+
+import productRoutes from './routes/productRoutes.js'; 
+import usersRoutes from './routes/usersRoutes.js';
+
+import cartRoutes from './routes/cartRoutes.js';
 
 config();
 
 const app = express();
 
-
-app.use(cors(
-    ))
-
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-// Use your auth middleware
-// app.use(authenticate);
 
-// Use product routes
+
+
+
+// Use product routes (and other routes as needed)
 app.use('/', productRoutes);
-
-// Use user routes
-app.use('/', userRoutes);
-
-// Use authentication routes
-app.use('/', authRoutes);
+app.use('/',usersRoutes)
+app.use('/', cartRoutes);
 
 // Handle 404 Not Found
 app.use((req, res, next) => {

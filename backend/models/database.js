@@ -83,6 +83,9 @@ const checkuser = async (emailAdd, userPass) => {
         }
 
         const hashedPassword = result[0].userPass;
+        
+        // console.log('userPass:', userPass);
+        // console.log('hashedPassword:', hashedPassword);
 
         // Compare the provided password with the hashed password
         const passwordMatch = await bcrypt.compare(userPass, hashedPassword);
@@ -93,6 +96,11 @@ const checkuser = async (emailAdd, userPass) => {
         return false;
     }
 };
+
+  const getCartItems = async (idusers) => {
+    const [rows] = await pool.query('SELECT * FROM cart WHERE idusers = ?', [idusers]);
+    return rows;
+  };
 
 export {
     getproducts,
@@ -106,4 +114,5 @@ export {
     getuser,
     deleteuser,
     updateuser,
-};
+    getCartItems
+};      
