@@ -27,7 +27,7 @@ const updateCartQuantity = async (req, res) => {
   try {
     const { cartid } = req.params;
     const { quantity } = req.body;
-    await pool.query('UPDATE cart SET quantity = ? WHERE cartid = ?', [quantity, cartId]);
+    await pool.query('UPDATE cart SET quantity = ? WHERE cartid = ?', [quantity, cartid]);
     res.status(200).json({ message: 'Cart quantity updated successfully' });
   } catch (error) {
     console.error('Error updating cart quantity:', error);
