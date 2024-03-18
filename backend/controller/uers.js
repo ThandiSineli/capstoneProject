@@ -1,5 +1,4 @@
-import jwt from 'jsonwebtoken'
-
+import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { adduser, getusers, getuser, deleteuser, updateuser, checkuser } from '../models/database.js';
 
@@ -76,24 +75,32 @@ const updateUser = async (req, res) => {
 };
 
 // Login
-const login = async (req, res) => {
-  const { emailAdd, userPass } = req.body;
+const loginUser = async (req, res) => {
+    const { emailAdd, userPass } = req.body;
 
-  // Check if user credentials are valid
-  const isValidUser = await checkuser(emailAdd, userPass);
+    try {
+        // Check if the user exists in the database
+        const hashedPassword = await checkuser(emailAdd);
 
-  if (!isValidUser) {
-    return res.status(401).json({ msg: 'Unauthorized' });
-  }
+        if (!hashedPassword) {
+            return res.status(401).json({ msg: 'Invalid email or password' });
+        }
 
-  // User credentials are valid, generate JWT token
-  const payload = { email: emailAdd }; // Customize payload as needed
-  const token = jwt.sign(payload, process.env.SECRET_key, { expiresIn: '1h' }); // Adjust expiration time as needed
+        // Compare the provided password with the hashed password
+        const passwordMatch = await bcrypt.compare(userPass, hashedPassword);
 
-  // Return token to the client
-  res.cookie('token', token, { httpOnly: true });
-  res.json({ token });
+        if (!passwordMatch) {
+            return res.status(401).json({ msg: 'Invalid email or password' });
+        }
+
+        // Generate JWT token upon successful login
+        const token = jwt.sign({ emailAdd: emailAdd }, process.env.SECRET_key, { expiresIn: '1h' });
+        res.cookie('jwt', token, { httpOnly: true });
+        res.json({ msg: 'Login successful', token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Internal Server Error' });
+    }
 };
-
-
-export { addUser, getUsers, getUser, deleteUser, updateUser, login };
+   
+export { addUser, getUsers, getUser, deleteUser, updateUser, loginUser };

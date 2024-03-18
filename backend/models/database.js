@@ -37,17 +37,25 @@ const updateproduct = async (iditems, prodName, quantity, amount, category,produ
 
 // Users logic
 
-const adduser = async (idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile) => {
-    // Hash the password
-   
+const adduser = async (idusers,Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile ) => {
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(userPass, 10);
 
-    await pool.query(
-        "INSERT INTO users (idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
-        [idusers, Firstname, Lastname, userage, Gender, userRole, emailAdd,userPass, userProfile]
-    );
+        // Insert the user into the database with the hashed password
+        await pool.query(
+            "INSERT INTO users (idusers, FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
+            [idusers,Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile]
+        );
 
-    return getusers();
+        // Return the list of users
+        return await getusers();
+    } catch (error) {
+        console.error(error);
+        throw new Error('Error adding user');
+    }
 };
+
 
 const getusers = async () => {
     const [result] = await pool.query(`SELECT * FROM users`);
@@ -73,29 +81,24 @@ const updateuser = async (Firstname, Lastname, userAge, Gender, userRole, emailA
     return getusers();
 };
 
-const checkuser = async (emailAdd, userPass) => {
+const checkuser = async (emailAdd) => {
     try {
-        const [result] = await pool.query(`SELECT userPass FROM users WHERE emailAdd = ?`, [emailAdd]);
+        const [result] = await pool.query(`SELECT * FROM users WHERE emailAdd = ?`, [emailAdd]);
 
         if (result.length === 0) {
             // User not found
-            return false;
+            return null;
         }
 
-        const hashedPassword = result[0].userPass;
-        
-        // console.log('userPass:', userPass);
-        // console.log('hashedPassword:', hashedPassword);
-
-        // Compare the provided password with the hashed password
-        const passwordMatch = await bcrypt.compare(userPass, hashedPassword);
-
-        return passwordMatch;
+        // Return the hashed password
+        return result[0].userPass;
     } catch (error) {
         console.error(error);
-        return false;
+        throw new Error('Error checking user');
     }
 };
+
+
 
   const getCartItems = async (idusers) => {
     const [rows] = await pool.query('SELECT * FROM cart WHERE idusers = ?', [idusers]);

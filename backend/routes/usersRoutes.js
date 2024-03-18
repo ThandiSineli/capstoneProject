@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  updateUser,addUser,deleteUser,getUser,getUsers,login
+  updateUser,addUser,deleteUser,getUser,getUsers,loginUser
 } from '../controller/uers.js';
 import authenticate from '../middleware/authenticate.js';
 
@@ -26,6 +26,9 @@ router.route('/users/:idusers')
             // Update a user
             .patch( updateUser)
   
-router.post('/login',authenticate ,login);
+            router.post('/login', loginUser);
+            router.get('/profile', authenticate, (req, res) => {
+                res.send(`Welcome ${req.user.Firstname}!`);
+            });
 
 export default router;

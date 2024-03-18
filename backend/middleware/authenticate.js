@@ -1,19 +1,19 @@
 import jwt from 'jsonwebtoken';
 
 const authenticate = (req, res, next) => {
-  // Get the token from the cookie header manually
-  const cookie = req.headers.cookie;
-  if (!cookie || !cookie.startsWith('token=')) {
-    return res.sendStatus(401);
-  }
-  
-  const token = cookie.split('=')[1];
+    const token = req.cookies.jwt;
 
-  jwt.verify(token, process.env.SECRET_key, (err, user) => {
-    if (err || !user) return res.sendStatus(403);
-    req.user = user;
-    next(); 
-  });
+    if (!token) {
+        return res.sendStatus(401); // Unauthorized if no token is provided
+    }
+
+    jwt.verify(token, process.env.SECRET_key, (err, user) => {
+        if (err || !user) {
+            return res.sendStatus(403); // Forbidden if token is invalid
+        }
+        req.user = user;
+        next(); // Proceed to the next middleware or route handler
+    });
 };
 
 export default authenticate;
