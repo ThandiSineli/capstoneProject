@@ -65,9 +65,10 @@ export default createStore({
       }
     },
     // my issue is how do I fetch from backend my login
-    async loginUser({ commit }, users) {
+    async loginUser({ commit }, login) {
+      console.log(login)
       try {                      
-        const response = await axios.post('http://localhost:5670/login', users, {
+        const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', login, {
           headers: {
             "Content-Type": "application/json",
           },

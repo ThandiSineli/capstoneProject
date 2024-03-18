@@ -33,7 +33,7 @@ export default {
           userPass: this.loginForm.userPass,
         };
         // fetch login from store
-        await this.$store.dispatch("loginUser", users);
+        await this.$store.dispatch("loginUser", login);
 
         // go to home
         this.$router.push("/home");
