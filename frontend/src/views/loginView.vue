@@ -1,47 +1,48 @@
 <template>
   <div class="login-container">
     <h2>Login</h2>
-    <form @submit.prevent="login">
+    <form class="login-box" @submit.prevent="loginUser">
       <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required>
+      <input type="email" id="email" v-model="loginForm.emailAdd">
 
       <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" required>
+      <input type="password" id="password" v-model="loginForm.userPass">
 
       <button type="submit">Login</button>
       <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-      <p>Don't have an account? <router-link to="/signup">Sign up here</router-link>.</p>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
-      email: '',
-      password: '',
-      errorMessage: ''
+      loginForm: {
+        emailAdd: "",
+        userPass: "",
+      },
+      errorMessage: null,
     };
   },
   methods: {
-    async login() {
+    async loginUser() {
       try {
-        const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', {
-          email: this.emailAdd,
-          password: this.userPass
-        });
-        console.log('Login successful:', response.data);
-        // Optionally, you can redirect the user to a dashboard or home page after successful login
-        this.$router.push('/');
+        const users = {
+          emailAdd: this.loginForm.emailAdd,
+          userPass: this.loginForm.userPass,
+        };
+        // fetch login from store
+        await this.$store.dispatch("loginUser", users);
+
+        // go to home
+        this.$router.push("/home");
       } catch (error) {
-        console.error('Login error:', error);
-        this.errorMessage = 'Invalid email or password. Please try again.';
+        console.error('Error logging in user:', error);
+        this.errorMessage = error.message;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
