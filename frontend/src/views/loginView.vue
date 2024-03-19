@@ -27,21 +27,22 @@ export default {
   },
   methods: {
     async loginUser() {
-      try {
-        const users = {
-          emailAdd: this.loginForm.emailAdd,
-          userPass: this.loginForm.userPass,
-        };
-        // fetch login from store
-        await this.$store.dispatch("loginUser", login);
+  try {
+    // Use this.loginForm instead of creating a new object
+    const user = {
+      emailAdd: this.loginForm.emailAdd,
+      userPass: this.loginForm.userPass,
+    };
 
-        // go to home
-        this.$router.push("/home");
-      } catch (error) {
-        console.error('Error logging in user:', error);
-        this.errorMessage = error.message;
-      }
-    },
+    await this.$store.dispatch("loginUser", user);
+
+    this.$router.push("/home");
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    this.errorMessage = error.message;
+  }
+},
+
   },
 };
 </script>

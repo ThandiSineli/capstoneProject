@@ -65,35 +65,32 @@ export default createStore({
       }
     },
     // my issue is how do I fetch from backend my login
-    async loginUser({ commit }, login) {
-      console.log(login)
-      try {                      
-        const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', login, {
+    async loginUser({ commit }, user) {
+      try {
+        const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', user, {
           headers: {
             "Content-Type": "application/json",
           },
         });
-
-        // Assuming your backend responds with a token upon successful login
+    
         const { token } = response.data;
-
+    
         if (!token) {
           throw new Error("Failed to login user.");
         }
-
-        // Store the token in localStorage
+    
         localStorage.setItem("accessToken", token);
-
-        // Commit mutation to set token
+    
         commit("setToken", token);
-
-        // Return the token or any other data if needed
+    
         return token;
       } catch (error) {
         console.error('Error logging in user:', error);
         throw error;
       }
     },
+    
+    
     addToCart({ commit }, data) {
       commit('addToCart', data);
     },
