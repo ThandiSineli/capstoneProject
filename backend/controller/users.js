@@ -1,39 +1,21 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+
 import { adduser, getusers, getuser, deleteuser, updateuser, checkuser } from '../models/database.js';
 
 // Add a user
 const addUser = async (req, res) => {
-    try {
-      const { Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+  const {Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+
+  // Hash the password
+  const hashedPassword = await bcrypt.hash(userPass, 10);
+
+  await adduser(Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile);
+
+  res.json({ msg: 'User added successfully!' });
+};   
+
   
-      // Hash the userPass
-      const hashedPassword = await bcrypt.hash(userPass, 10);
-  
-      // Insert the user
-      const newUserId = await adduser(
-        null,
-        Firstname,
-        Lastname,
-        userAge,
-        Gender,
-        userRole,
-        emailAdd,
-        hashedPassword,
-        userProfile
-      );
-  
-      // Send the success message
-      res.status(201).json({
-        message: "User added successfully!",
-      });
-    } catch (error) {
-      res.status(500).json({
-        message: "Error adding user",
-        error: error.message,
-      });
-    }
-  };
 // Get all users
 const getUsers = async (req, res) => {
     try {
@@ -103,4 +85,33 @@ const loginUser = async (req, res) => {
     console.error(error);
   }
 }; 
-export { addUser, getUsers, getUser, deleteUser, updateUser, loginUser };
+const signupUser = async (req, res) => {
+    try {
+        // Destructure user data from request body
+        const { Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+
+        // Check if the user already exists
+        const existingUser = await checkuser(emailAdd);
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already exists' });
+        }
+
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(userPass, 10);
+
+        // Add the user to the database
+        await addUser(Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile);
+
+        // Generate JWT token
+        const token = jwt.sign({ emailAdd }, process.env.SECRET_key, { expiresIn: '1h' });
+
+        // Send success response
+        res.status(201).json({ message: 'User created successfully', token });
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+        res.status(500).json({ message: 'Error creating user' });
+    }
+};
+
+export { addUser, getUsers, getUser, deleteUser, updateUser, loginUser ,  signupUser};

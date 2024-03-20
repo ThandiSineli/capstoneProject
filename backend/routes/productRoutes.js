@@ -10,18 +10,18 @@ import {
 const router = express.Router();
 
 // Get all products
-router.get('/products', getProducts);
+router.get('/products',getProducts);
 
 // Get product by ID
-router.get('/products/:iditems', getProduct);
+router.get('/products/:iditems',getProduct);
 
 // Add a product
-router.post('/products', addProduct);
+router.post('/products',addProduct);
 
 // Delete a product
-router.delete('/products/:iditem', deleteProduct);
+router.delete('/products/:iditem',deleteProduct);
 
 // Update a product
-router.patch('/products/:iditem', updateProduct);
+router.patch('/products/:iditem',updateProduct);
 
 export default router;

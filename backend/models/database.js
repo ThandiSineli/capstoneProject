@@ -44,7 +44,7 @@ const adduser = async (Firstname, Lastname, userAge, Gender, userRole, emailAdd,
 
         // Insert the user into the database with the hashed password
         await pool.query(
-            "INSERT INTO users (FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO users (FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?)",
             [Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile]
         );
 
@@ -72,12 +72,12 @@ const deleteuser = async (idusers) => {
     return getusers();
 };
 
-const updateuser = async (Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile, idusers) => {
+const updateuser = async (Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile) => {
     await pool.query(`
         UPDATE users 
         SET Firstname=?, Lastname=?, userAge=?, Gender=?, userRole=?, emailAdd=?, userPass=?, userProfile=?
         WHERE idusers=?
-    `, [Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile, idusers]);
+    `, [Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile]);
     return getusers();
 };
 

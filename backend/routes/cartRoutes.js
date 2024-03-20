@@ -3,8 +3,8 @@ import { addToCart, removeFromCart, updateCartQuantity } from '../controller/car
 
 const router = express.Router();
 
-router.post('/cart', addToCart);
-router.delete('/cart/:cartid', removeFromCart);
-router.put('/cart/:cartid', updateCartQuantity);
+router.post('/cart',addToCart);
+router.delete('/cart/:cartid',removeFromCart);
+router.put('/cart/:cartid',updateCartQuantity);
 
 export default router;
