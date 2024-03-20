@@ -16,7 +16,7 @@ app.use(cookieParser());
 
 // Serve static files from the public directory
 
-app.use(express("/public"));
+app.use(express("public"));
 
 // Use product routes (and other routes as needed)
 app.use('/', productRoutes);
