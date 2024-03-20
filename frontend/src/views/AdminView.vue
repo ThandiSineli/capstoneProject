@@ -45,10 +45,9 @@ export default {
       
       this.$router.push({ name: 'editproduct', params: { id: product.prodID } });
     },
-    async deleteProduct(prodID) {
+    async deleteProduct(productId) {
       try {
-        await axios.delete(`https://capstoneproject-wv34.onrender.com/products${prodID}`);
-        
+        await axios.delete(`https://capstoneproject-wv34.onrender.com/products/${productId}`);
         await this.fetchProducts();
       } catch (error) {
         console.error('Error deleting product:', error);

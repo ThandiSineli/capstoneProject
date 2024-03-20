@@ -3,16 +3,16 @@
     <h2>Sign Up</h2>
     <form @submit.prevent="signup">
       <label for="firstname">First Name:</label>
-      <input type="text" id="firstname" v-model="firstname" required>
+      <input type="text" id="firstname" v-model="Firstname" required>
 
       <label for="lastname">Last Name:</label>
-      <input type="text" id="lastname" v-model="lastname" required>
+      <input type="text" id="lastname" v-model="laststname" required>
 
-      <label for="userage">Age:</label>
-      <input type="number" id="userage" v-model="userage" required>
+      <label for="userAge">Age:</label>
+      <input type="number" id="userAge" v-model="userAge" required>
 
-      <label for="gender">Gender:</label>
-      <select id="gender" v-model="gender" required>
+      <label for="Gender">Gender:</label>
+      <select id="Gender" v-model="Gender" required>
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
@@ -32,14 +32,15 @@
 
 <script>
 import axios from 'axios';
+import swal from 'sweetalert';
 
 export default {
   data() {
     return {
       firstname: '',
       lastname: '',
-      userage: null,
-      gender: 'female',
+      userAge: null,
+      Gender: '',
       email: '',
       password: '',
       errorMessage: ''
@@ -48,24 +49,24 @@ export default {
   methods: {
     async signup() {
       try {
-        // Send signup data to backend API
-        const response = await axios.post('https://capstoneproject-wv34.onrender.com/users', {
-          Firstname: this.firstname,
-          Lastname: this.lastname,
-          userage: this.userage,
-          Gender: this.gender,
-          emailAdd: this.email,
-          userPass: this.password
-        });
-        // Handle successful signup
-        console.log('Signup successful:', response.data);
-        // Optionally, you can redirect the user to the login page after successful signup
-        this.$router.push('/login');
-      } catch (error) {
-        // Handle signup error
-        console.error('Signup error:', error);
-        this.errorMessage = 'Failed to signup. Please try again.';
-      }
+  // Send signup data to backend API
+  const response = await axios.post('https://capstoneproject-wv34.onrender.com/users', {
+    Firstname: this.firstname,
+    Lastname: this.lastname,
+    userage: this.userage,
+    Gender: this.gender,
+    emailAdd: this.email,
+    userPass: this.password
+  });
+  // Handle successful signup
+  console.log('Signup successful:', response.data);
+  // Optionally, you can redirect the user to the login page after successful signup
+  this.$router.push('/login');
+} catch (error) {
+  // Handle signup error
+  console.error('Signup error:', error);
+  this.errorMessage = 'Failed to signup. Please try again.';
+}
     }
   }
 };

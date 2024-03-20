@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import swal from 'sweetalert';
+
 export default {
   data() {
     return {
@@ -28,7 +30,6 @@ export default {
   methods: {
     async loginUser() {
   try {
-    // Use this.loginForm instead of creating a new object
     const user = {
       emailAdd: this.loginForm.emailAdd,
       userPass: this.loginForm.userPass,
@@ -37,11 +38,16 @@ export default {
     await this.$store.dispatch("loginUser", user);
 
     this.$router.push("/home");
+
+    // Display a welcome message to the user
+    swal("Welcome!", "You have logged in successfully!", "success");
   } catch (error) {
     console.error('Error logging in user:', error);
     this.errorMessage = error.message;
+    // Display an error message to the user
+    swal("Error!", "Failed to login. Please check your credentials and try again.", "error");
   }
-},
+}
 
   },
 };
