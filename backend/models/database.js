@@ -37,15 +37,15 @@ const updateproduct = async (iditems, prodName, quantity, amount, category,produ
 
 // Users logic
 
-const adduser = async (idusers,Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile ) => {
+const adduser = async (Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile ) => {
     try {
         // Hash the password
         const hashedPassword = await bcrypt.hash(userPass, 10);
 
         // Insert the user into the database with the hashed password
         await pool.query(
-            "INSERT INTO users (idusers, FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
-            [idusers,Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile]
+            "INSERT INTO users (FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile) VALUES (?,?,?,?,?,?,?,?,?)",
+            [Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile]
         );
 
         // Return the list of users
@@ -81,24 +81,33 @@ const updateuser = async (Firstname, Lastname, userAge, Gender, userRole, emailA
     return getusers();
 };
 
-const checkuser = async (emailAdd) => {
+const checkuser = async (emailAdd, userPass) => {
     try {
-        const [result] = await pool.query(`SELECT * FROM users WHERE emailAdd = ?`, [emailAdd]);
-
-        if (result.length === 0) {
-            // User not found
-            return null;
-        }
-
-        // Return the hashed password
-        return result[0].userPass;
+      const [result] = await pool.query(`SELECT * FROM users WHERE emailAdd = ?`, [emailAdd]);
+  
+      if (result.length === 0) {
+        // User not found
+        return null;
+      }
+  
+      console.log("userPass from request:", userPass);
+      console.log("result[0].userPass from user object:", result[0].userPass);
+  
+      // Compare the hashed passwords
+      const correctPassword = await bcrypt.compare(userPass, result[0].userPass);
+  
+      if (!correctPassword) {
+        // Return null if the passwords do not match
+        return null;
+      }
+  
+      // Return the user row if the passwords match
+      return result[0];
     } catch (error) {
-        console.error(error);
-        throw new Error('Error checking user');
+      console.error(error);
+      throw new Error('Error checking user');
     }
-};
-
-
+  };
 
   const getCartItems = async (idusers) => {
     const [rows] = await pool.query('SELECT * FROM cart WHERE idusers = ?', [idusers]);
