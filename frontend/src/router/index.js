@@ -7,7 +7,8 @@ import SignupView from '../views/SignupView.vue';
 import loginView from '../views/loginView.vue';
 import userView from '../views/userView.vue';
 import CheckoutView from '../views/CheckoutView.vue';
-// import SingleProductView from '../views/SingleProductView.vue'
+import SingleProductView from '../views/SingleView.vue';
+
 
 const routes = [
   {
@@ -38,11 +39,11 @@ const routes = [
     name: 'contact',
     component: ContactView
   },
-  // {
-  //   path: '/singleproduct',
-  //   name: 'singleproduct',
-  //   component: SingleProductView
-  // },
+  {
+    path: '/singleview',
+    name: 'singleview',
+    component: SingleProductView
+  },
   {
     path: '/signup',
     name: 'signup',

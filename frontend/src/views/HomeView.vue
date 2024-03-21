@@ -3,7 +3,7 @@
     <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="https://i.pinimg.com/564x/b2/30/7e/b2307e10016ad3011f1eed65bfe6175f.jpg" class="d-block w-100" alt="Slide 1">
+          <img src="https://i.ibb.co/1nDcFX4/Photoroom-20240317-084805.jpg" class="d-block w-100" alt="Slide 1">
         </div>
         <div class="carousel-item">
           <img src="https://i.pinimg.com/564x/82/c4/00/82c400d5be4fc129be4b92141472addd.jpg" class="d-block w-100" alt="Slide 2">
@@ -83,8 +83,8 @@ export default {
 }
 
 .carousel-item img {
-  width: 150%;
-  height: 650px;
+  width: 100%;
+  height: 600px;
  
 }
 
