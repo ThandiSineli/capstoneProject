@@ -2,9 +2,9 @@ import { pool } from '../config/config.js';
 
 const addToCart = async (req, res) => {
   try {
-    const { iditems, idusers, quantity } = req.body;
-    const totalPrice = calculateTotalPrice(iditems, quantity); // Calculate total price based on item ID and quantity
-    await pool.query('INSERT INTO cart (iditems, idusers, quantity, total) VALUES (?, ?, ?, ?)', [iditems, idusers, quantity, totalPrice]);
+    const { iditems, idusers, quantity ,total} = req.body;
+    // const totalPrice = calculateTotalPrice(iditems, quantity); // Calculate total price based on item ID and quantity
+    await pool.query('INSERT INTO cart (iditems, idusers, quantity, total) VALUES (?, ?, ?, ?)', [iditems, idusers, quantity, total]);
     res.status(201).json({ message: 'Item added to cart successfully' });
   } catch (error) {
     console.error('Error adding item to cart:', error);
@@ -36,9 +36,5 @@ const updateCartQuantity = async (req, res) => {
 };
 
 // Helper function to calculate total price
-const calculateTotalPrice = (iditems, quantity) => {
-  // Query the database to get the price of the item with itemId
-  // Calculate the total price based on the item price and quantity
-};
 
 export { addToCart, removeFromCart, updateCartQuantity };

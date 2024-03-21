@@ -5,12 +5,12 @@ import { adduser, getusers, getuser, deleteuser, updateuser, checkuser } from '.
 
 // Add a user
 const addUser = async (req, res) => {
-  const {Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+  const {Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
 
   // Hash the password
   const hashedPassword = await bcrypt.hash(userPass, 10);
 
-  await adduser(Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile);
+  await adduser(Firstname, Lastname, userage, Gender, userRole, emailAdd, hashedPassword, userProfile);
 
   res.json({ msg: 'User added successfully!' });
 };   
@@ -55,8 +55,8 @@ const deleteUser = async (req, res) => {
 // Update a user
 const updateUser = async (req, res) => {
     try {
-        const { FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
-        await updateuser(FirstName, LastName, userAge, Gender, userRole, emailAdd, userPass, userProfile, req.params.idusers);
+        const { FirstName, LastName, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+        await updateuser(FirstName, LastName, userage, Gender, userRole, emailAdd, userPass, userProfile, req.params.idusers);
         res.status(200).json({ msg: 'User updated successfully' });
     } catch (error) {
         console.error(error);
@@ -67,28 +67,30 @@ const updateUser = async (req, res) => {
 // Login
 const loginUser = async (req, res) => {
     try {
-      const { emailAdd, userPass } = req.body;
-  
-      // Verify the user
-      const user = await checkuser(emailAdd, userPass);
-  
-      if (!user) {
-        return res.status(401).json({ msg: 'Invalid email or password' });
-      }
-  
-     
-      // Generate JWT token upon successful login
-      const token = jwt.sign({ emailAdd: emailAdd }, process.env.SECRET_key, { expiresIn: '1h' });
-    res.cookie('jwt', token, { httpOnly: true });
-    res.json({ msg: 'Login successful', token, user: { Firstname: user.Firstname, Lastname: user.Lastname } });
-  } catch (error) {
-    console.error(error);
-  }
-}; 
+        const { emailAdd, userPass } = req.body;
+
+        // Verify the user
+        const user = await checkuser(emailAdd, userPass);
+
+        if (!user) {
+            return res.status(401).json({ msg: 'Invalid email or password' });
+        }
+
+        // Generate JWT token upon successful login
+        const token = jwt.sign({ emailAdd: emailAdd }, process.env.SECRET_key, { expiresIn: '1h' });
+        res.cookie('jwt', token, { httpOnly: true });
+
+        // Send success response with token and user information
+        res.status(200).json({ msg: 'Login successful', token, user });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Internal Server Error' });
+    }
+};
+
 const signupUser = async (req, res) => {
     try {
-        // Destructure user data from request body
-        const { Firstname, Lastname, userAge, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
+        const { Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
 
         // Check if the user already exists
         const existingUser = await checkuser(emailAdd);
@@ -96,22 +98,19 @@ const signupUser = async (req, res) => {
             return res.status(400).json({ message: 'User already exists' });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(userPass, 10);
+        // Hash the password before storing it
+        const hashedPassworded = await bcrypt.hash(userPass, 15);
 
-        // Add the user to the database
-        await addUser(Firstname, Lastname, userAge, Gender, userRole, emailAdd, hashedPassword, userProfile);
+        // Add the user to the database with the hashed password
+        await adduser(Firstname, Lastname, userage, Gender, userRole, emailAdd, hashedPassworded, userProfile);
 
-        // Generate JWT token
-        const token = jwt.sign({ emailAdd }, process.env.SECRET_key, { expiresIn: '1h' });
-
-        // Send success response
-        res.status(201).json({ message: 'User created successfully', token });
+        res.status(201).json({ message: 'User created successfully' });
     } catch (error) {
-        // Handle errors
         console.error(error);
         res.status(500).json({ message: 'Error creating user' });
     }
 };
+
+
 
 export { addUser, getUsers, getUser, deleteUser, updateUser, loginUser ,  signupUser};

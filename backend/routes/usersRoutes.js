@@ -8,18 +8,9 @@ import authenticate from '../middleware/authenticate.js';
 const router = express.Router();
 
 // Add a user   
-// router.route('/users')
-//          .post(addUser)
-//          .get(getUsers)
 router.route('/users')
-.post((req, res, next) => {
-  console.log('Request received at POST /users');
-  next(); // Call the next middleware or route handler
-}, addUser)
-.get((req, res, next) => {
-  console.log('Request received at GET /users');
-  next(); // Call the next middleware or route handler
-}, getUsers)
+         .post(addUser)
+         .get(getUsers)
 
 // Get all users
 
