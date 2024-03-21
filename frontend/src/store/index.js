@@ -32,9 +32,10 @@ export default createStore({
       state.cart.push(data);
       console.log('Item added to cart:', data); 
     },
-    deleteProduct(state, prodID) {
-      state.products = state.products.filter(product => product.prodID !== prodID);
+    deleteProduct(state, iditems) {
+      state.products = state.products.filter(product => product.iditems !== iditems);
     },
+    
   },
   actions: {
     async fetchProducts({ commit }) {
@@ -55,16 +56,16 @@ export default createStore({
         throw error;
       }
     },
-    async deleteProduct({ commit }, prodID) {
+    async deleteProduct({ commit }, iditems) {
       try {
-        await axios.delete(`https://capstoneproject-wv34.onrender.com/products/${prodID}`);
+        await axios.delete(`https://capstoneproject-wv34.onrender.com/products/${iditems}`);
         commit("deleteProduct", prodID);
       } catch (error) {
         console.error('Error deleting product:', error);
         throw error;
       }
     },
-    // my issue is how do I fetch from backend my login
+    
     async loginUser({ commit }, user) {
       try {
         const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', user, {

@@ -13,28 +13,7 @@
           <router-link to="/" class="nav-link">Home</router-link> 
           <router-link to="/Product" class="nav-link">Shop</router-link> 
           <router-link to="/Admin" class="nav-link">Admin</router-link> 
-          <router-link to="/user" class="nav-link">users</router-link> 
-        </div>
-  
-         
-        
-        
-        <form class="d-flex mx-auto">
-          <input
-            v-model="searchQuery"
-            type="search"
-            class="form-control rounded me-2"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="search-addon"
-            style="border-color: #FF69B4; color: #000;"
-          />
-          <button class="btn btn-outline-secondary" type="submit" id="search-addon" style="border-color: #FF69B4; color: black;">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
-
-       
+         </div>
         <div class="ms-auto d-flex align-items-center">
           <router-link to="/login" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/1c/ff/22/ME17RQHY_t.png" alt="Profile" class="icon-img"></router-link>
           <router-link to="/wishlist" class="nav-link"><img src="https://cdn-thumbs.imagevenue.com/a3/d8/93/ME17RQIK_t.png" alt="Wishlist" class="icon-img"></router-link>
@@ -90,3 +69,9 @@
   margin-right: 5px; 
 } 
 </style>
+  
+         
+        
+        
+        
+       

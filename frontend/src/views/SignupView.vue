@@ -3,10 +3,10 @@
     <h2>Sign Up</h2>
     <form @submit.prevent="signup">
       <label for="firstname">First Name:</label>
-      <input type="text" id="firstname" v-model="Firstname" required>
+      <input type="text" id="firstname" v-model="firstname" required>
 
       <label for="lastname">Last Name:</label>
-      <input type="text" id="lastname" v-model="laststname" required>
+      <input type="text" id="lastname" v-model="lastname" required>
 
       <label for="userAge">Age:</label>
       <input type="number" id="userAge" v-model="userAge" required>
@@ -49,29 +49,32 @@ export default {
   methods: {
     async signup() {
       try {
-  // Send signup data to backend API
-  const response = await axios.post('https://capstoneproject-wv34.onrender.com/users', {
-    Firstname: this.firstname,
-    Lastname: this.lastname,
-    userage: this.userage,
-    Gender: this.gender,
-    emailAdd: this.email,
-    userPass: this.password
-  });
-  // Handle successful signup
-  console.log('Signup successful:', response.data);
-  // Optionally, you can redirect the user to the login page after successful signup
-  this.$router.push('/login');
-} catch (error) {
-  // Handle signup error
-  console.error('Signup error:', error);
-  this.errorMessage = 'Failed to signup. Please try again.';
-}
+        const response = await axios.post('https://capstoneproject-wv34.onrender.com/users', {
+          Firstname: this.firstname,
+          Lastname: this.lastname,
+          userAge: this.userAge, 
+          Gender: this.Gender, 
+          emailAdd: this.email, 
+          userPass: this.password 
+        });
+        swal({
+          title: "Success",
+          text: "Signup successful!",
+          icon: "success",
+          button: "OK",
+        }).then(() => {
+          // Redirect to login page or any other action
+          this.$router.push('/login');
+        });
+      } catch (error) {
+        // Handle signup error
+        console.error('Signup error:', error);
+        // Display error message if needed
     }
   }
+}
 };
 </script>
-
 <style scoped>
 .signup-container {
   max-width: 400px;
