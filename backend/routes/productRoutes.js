@@ -19,9 +19,9 @@ router.get('/products/:iditems',getProduct);
 router.post('/products',addProduct);
 
 // Delete a product
-router.delete('/products/:iditem',deleteProduct);
+router.delete('/products/:iditems',deleteProduct);
 
 // Update a product
-router.patch('/products/:iditem',updateProduct);
+router.patch('/products/:iditems',updateProduct);
 
 export default router;

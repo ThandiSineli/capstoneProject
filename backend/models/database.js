@@ -26,14 +26,21 @@ const deleteproduct = async (iditems) => {
     return getproducts();
 };
 
-const updateproduct = async (iditems, prodName, quantity, amount, category,producturl,description) => {
-    await pool.query(`
-        UPDATE products
-        SET prodName=?, quantity=?, amount=?, category=? ,producturl=? ,description=?
-        WHERE iditems=?
-    `, [iditems, prodName, quantity, amount, category,producturl,description]);
-    return getproducts();
-};
+const updateproduct = async (updateData, iditems) => {
+    let sqlQuery = "UPDATE products SET";
+    const values = [];
+    for (const key in updateData) {
+      if (updateData.hasOwnProperty(key)) {
+        sqlQuery += ` ${key}=?,`;
+        values.push(updateData[key]);
+      }
+    }
+    sqlQuery = sqlQuery.slice(0, -1);
+    sqlQuery += "WHERE iditems=?";
+    values.push(iditems);
+      await pool.query(sqlQuery, values);
+    return getproduct(iditems);
+  };
 
 // Users logic
 
@@ -72,14 +79,23 @@ const deleteuser = async (idusers) => {
     return getusers();
 };
 
-const updateuser = async (Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile) => {
-    await pool.query(`
-        UPDATE users 
-        SET Firstname=?, Lastname=?, userAge=?, Gender=?, userRole=?, emailAdd=?, userPass=?, userProfile=?
-        WHERE idusers=?
-    `, [Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile]);
-    return getusers();
-};
+const updateuser = async (updateData, idusers) => {
+    let sqlQuery = "UPDATE users SET";
+    const values = [];
+    for (const key in updateData) {
+      if (updateData.hasOwnProperty(key)) {
+        sqlQuery += ` ${key}=?,`;
+        values.push(updateData[key]);
+      }
+    }
+    sqlQuery = sqlQuery.slice(0, -1);
+    sqlQuery += " WHERE idusers=?";
+    values.push( idusers);
+      await pool.query(sqlQuery, values);
+    return  getproduct( idusers);
+  };
+  
+  
 
 const checkuser = async (emailAdd, userPass) => {
     try {

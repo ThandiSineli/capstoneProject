@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-
 import { adduser, getusers, getuser, deleteuser, updateuser, checkuser } from '../models/database.js';
 
 // Add a user
@@ -8,7 +7,7 @@ const addUser = async (req, res) => {
   const {Firstname, Lastname, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
 
   // Hash the password
-  const hashedPassword = await bcrypt.hash(userPass, 10);
+  const hashedPassword = await bcrypt.hash(userPass, 15);
 
   await adduser(Firstname, Lastname, userage, Gender, userRole, emailAdd, hashedPassword, userProfile);
 
@@ -55,15 +54,18 @@ const deleteUser = async (req, res) => {
 // Update a user
 const updateUser = async (req, res) => {
     try {
-        const { FirstName, LastName, userage, Gender, userRole, emailAdd, userPass, userProfile } = req.body;
-        await updateuser(FirstName, LastName, userage, Gender, userRole, emailAdd, userPass, userProfile, req.params.idusers);
-        res.status(200).json({ msg: 'User updated successfully' });
+      const idusers = +req.params.idusers;
+      const updateData = req.body; // Contains only the fields to be updated
+      // Update user in the database
+      await updateuser(updateData, idusers);
+      // Respond with the updated user
+      res.json(await getuser(idusers));
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: 'Internal Server Error' });
+      console.error(error);
+      res.status(500).json({ msg: 'Internal Server Error' });
     }
-};
-
+  };
+  
 // Login
 const loginUser = async (req, res) => {
     try {

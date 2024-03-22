@@ -28,11 +28,21 @@ import {
   };
   
   // Update a product
-  let updateProduct = async (req, res) => {
+  const updateProduct = async (req, res) => {
     try {
-      const { prodName, quantity, amount, category, producturl } = req.body;
-      await updateproduct(prodName, quantity, amount, category,producturl +req.params.iditems);
-      res.json(await getproducts());
+      const iditems = +req.params.iditems;
+      const updateData = req.body; // Contains only the fields to be updated
+  
+      // Update product in the database
+      await updateproduct(updateData, iditems);
+  
+      // Respond with the updated product
+      const updatedProduct = await getproduct(iditems);
+      if (!updatedProduct) {
+        return res.status(404).json({ msg: 'Product not found' });
+      }
+  
+      res.json(updatedProduct);
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: 'Internal Server Error' });
