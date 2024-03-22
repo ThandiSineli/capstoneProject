@@ -47,9 +47,9 @@ export default createStore({
         console.error('Error fetching products:', error);
       }
     },
-    async fetchSingleProduct({ commit }, productId) {
+    async fetchSingleProduct({ commit }, iditems) {
       try {
-        const { data } = await axios.get(`https://capstoneproject-wv34.onrender.com/products/${productId}`);
+        const { data } = await axios.get(`https://capstoneproject-wv34.onrender.com/products/${iditems}`);
         commit('setSingleProduct', data);
       } catch (error) {
         console.error('Error fetching single product:', error);
@@ -88,7 +88,55 @@ export default createStore({
       } catch (error) {
         console.error('Error logging in user:', error);
       }
+
     },
+    
+      async fetchUsers({ commit }) {
+        try {
+          const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/users/');
+          commit("setUsers", data);
+        } catch (error) {
+          console.error('Error fetching users:', error);
+        }
+      },
+      async deleteUser({ commit }, id) {
+        try {
+          await axios.delete(`https://capstoneproject-wv34.onrender.com/users/${id}`);
+          commit("deleteUser", id);
+          Swal.fire({
+            icon: 'success',
+            title: 'User deleted successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } catch (error) {
+          console.error('Error deleting user:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to delete user!',
+          });
+        }
+      },
+      async updateUser({ commit }, user) {
+        try {
+          await axios.patch(`https://capstoneproject-wv34.onrender.com/users/${idusers}`, user);
+          commit("updateUser", user);
+          Swal.fire({
+            icon: 'success',
+            title: 'User updated successfully',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        } catch (error) {
+          console.error('Error updating user:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Failed to update user!',
+          });
+        }
+      },
     addToCart({ commit }, data) {
       commit('addToCart', data);
     },

@@ -81,32 +81,36 @@ export default {
       product.editedCategory = product.category;
     },
     async saveChanges(product) {
-      try {
-        await axios.put(`https://capstoneproject-wv34.onrender.com/products/${product.iditems}`, {
-          prodName: product.editedName,
-          quantity: product.editedQuantity,
-          amount: product.editedAmount,
-          category: product.editedCategory
-        });
-        product.prodName = product.editedName;
-        product.quantity = product.editedQuantity;
-        product.amount = product.editedAmount;
-        product.category = product.editedCategory;
-        product.editing = false;
-        Swal.fire({
-          icon: 'success',
-          title: 'Product updated successfully',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      } catch (error) {
-        console.error('Error saving changes:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Failed to update product!',
-        });
-      }
+  try {
+    await axios.patch(`https://capstoneproject-wv34.onrender.com/products/${product.iditems}`, {
+      prodName: product.editedName,
+      quantity: product.editedQuantity,
+      amount: product.editedAmount,
+      producturl: product.editedImage,
+      category: product.editedCategory
+    });
+    product.prodName = product.editedName;
+    product.quantity = product.editedQuantity;
+    product.amount = product.editedAmount;
+    product.producturl = product.editedImage;
+    product.category = product.editedCategory;
+    product.editing = false;
+    Swal.fire({
+      icon: 'success',
+      title: 'Product updated successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  } catch (error) {
+    console.error('Error saving changes:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Failed to update product!',
+    });
+  }
+}
+
     },
     async confirmDelete(iditems) {
       try {
@@ -126,8 +130,10 @@ export default {
           text: 'Failed to delete product!',
         });
       }
-    }
-  },
+    },
+
+
+  
   mounted() {
     this.fetchProducts();
   }

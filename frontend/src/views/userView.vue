@@ -80,39 +80,42 @@ export default {
       user.editedPassword = user.userPass;
     },
     async saveChanges(user) {
-      try {
-        await axios.put(`https://capstoneproject-wv34.onrender.com/users/${user.idusers}`, {
-          Firstname: user.editedFirstname,
-          Lastname: user.editedLastname,
-          userage: user.editedAge,
-          Gender: user.editedGender,
-          userRole: user.editedRole,
-          emailAdd: user.editedEmail,
-          userPass: user.editedPassword
-        });
-        user.Firstname = user.editedFirstname;
-        user.Lastname = user.editedLastname;
-        user.userage = user.editedAge;
-        user.Gender = user.editedGender;
-        user.userRole = user.editedRole;
-        user.emailAdd = user.editedEmail;
-        user.userPass = user.editedPassword;
-        user.editing = false;
-        Swal.fire({
-          icon: 'success',
-          title: 'User updated successfully',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      } catch (error) {
-        console.error('Error saving changes:', error);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Failed to update user!',
-        });
-      }
-    },
+  try {
+    await axios.patch(`https://capstoneproject-wv34.onrender.com/users/${user.idusers}`, {
+      FirstName: user.editedFirstName,
+      LastName: user.editedLastName,
+      userage: user.editedAge,
+      Gender: user.editedGender,
+      userRole: user.editedRole,
+      emailAdd: user.editedEmail,
+      userPass: user.editedPassword,
+      userProfile: user.editedProfile
+    });
+    user.FirstName = user.editedFirstName;
+    user.LastName = user.editedLastName;
+    user.userage = user.editedAge;
+    user.Gender = user.editedGender;
+    user.userRole = user.editedRole;
+    user.emailAdd = user.editedEmail;
+    user.userPass = user.editedPassword;
+    user.userProfile = user.editedProfile;
+    user.editing = false;
+    Swal.fire({
+      icon: 'success',
+      title: 'User updated successfully',
+      showConfirmButton: false,
+      timer: 1500
+    });
+  } catch (error) {
+    console.error('Error saving changes:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Failed to update user!',
+    });
+  }
+  },
+  
     async confirmDelete(idusers) {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/users/${idusers}`);

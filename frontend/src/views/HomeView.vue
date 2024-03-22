@@ -8,6 +8,7 @@
         <router-link to="/signup" class="signup-link">Sign Up Now</router-link>
       </div>
     </section>
+   
 
     <!-- Bestsellers Section -->
     <section class="bestsellers-section">
@@ -26,37 +27,14 @@
         </div>
       </div>
     </section>
-
-    <!-- Carousel Section -->
-    <section class="carousel-section">
-      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div v-for="(slide, index) in carouselSlides" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }">
-            <img :src="slide.image" class="d-block w-100" :alt="'Slide ' + (index + 1)">
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </section>
-  </div>
+     </div>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      carouselSlides: [
-        { image: 'https://i.pinimg.com/564x/82/c4/00/82c400d5be4fc129be4b92141472addd.jpg', alt: 'Slide 1' },
-        { image: 'https://i.pinimg.com/564x/cd/46/43/cd4643dfb0e94cab511c8551f463a6fa.jpg', alt: 'Slide 2' },
-        // Add more slides as needed
-      ],
+     
     };
   },
   computed: {

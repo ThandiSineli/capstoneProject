@@ -39,10 +39,12 @@ const routes = [
     name: 'contact',
     component: ContactView
   },
-  {
-    path: '/singleview',
-    name: 'singleview',
-    component: SingleProductView
+  
+    {
+      path: '/products/:id',
+      name: 'singleProduct',
+      component: SingleProductView
+    
   },
   {
     path: '/signup',

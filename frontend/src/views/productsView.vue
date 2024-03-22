@@ -22,7 +22,7 @@
           <div class="buttons">
             <p class="card-text">Price: R{{ product.amount }}</p>
             <p class="card-text">Category: {{ product.category }}</p>
-            <router-link :to="{ name:'singleview', params: { id: product.prodID } }" class="btn btn-primary">View Details</router-link>
+            <router-link :to="{ name:'singleProduct', params: { id: product.iditems } }" class="btn btn-primary">View Details</router-link>
           </div>
         </div>
       </div>

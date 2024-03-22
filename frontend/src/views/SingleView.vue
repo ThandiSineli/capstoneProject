@@ -1,35 +1,60 @@
 <template>
-  <div class="product-details">
-    <div class="product-info">
-      <h2>{{ product ? product.prodName : 'Product Not Found' }}</h2>
-      <img v-if="product" :src="product.producturl" alt="Product Image">
-      <p v-if="product">Price: R{{ product.amount }}</p>
-      <p v-if="product">Quantity: {{ product.quantity }}</p>
+  <div>
+    <div class="container">
+      <div class="wrapper" v-for="product in products" :key="product.iditems">
+        <div class="product-img">
+          <img :src="product.producturl" height="420" width="327">
+        </div>
+        <div class="product-info">
+          <div class="product-text">
+            <h1>{{ product.prodName }}</h1>
+            <h2></h2>
+            <p>{{ product.description }}</p>
+          </div>
+          <p><span>R{{ product.amount }}</span></p>
+          <div class="product-price-btn">
+            <button @click="addToCart(product)" class="btn btn-light bg-black text-white m-3" href="#" role="button">
+              Add to Cart
+            </button>
+            <router-link to="/product" class="nav-link link-light">
+              <a class="btn btn-light bg-black text-white m-3" href="#" role="button">
+                <i class="fa fa-shopping-cart"></i> return
+              </a>
+            </router-link>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="description" v-if="product">
-      <p>Description: {{ product.description }}</p>
-    </div>
-    <button v-if="product" @click="addToCart">Add to Cart</button>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import Swal from 'sweetalert2';
+
 export default {
   computed: {
-    product() {
-      return this.$store.state.products.find(product => product.prodID === this.$route.params.id);
-    },
+    ...mapState(['products'])
   },
   methods: {
-    addToCart() {
-      if (this.product) {
-        this.$store.dispatch('addToCart', this.product);
-        alert('Product added to cart successfully!');
-      }
+    addToCart(product) {
+      // You can dispatch an action to add the product to the cart
+      // For example, assuming you have an action named addToCart in your store
+      this.$store.dispatch('addToCart', product);
+      
+      // Show SweetAlert confirmation
+      Swal.fire({
+        icon: 'success',
+        title: 'Added to Cart!',
+        text: `${product.prodName} has been added to your cart.`,
+        showConfirmButton: false,
+        timer: 1500
+      });
     }
-  },
+  }
 };
 </script>
+
 
 <style scoped>
 .product-details {
