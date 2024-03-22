@@ -1,28 +1,28 @@
 <template>
-  <div>
+  <!-- <div>
     <div v-if="!loaded" class="loader">
       <div class="custom-spinner"></div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      loaded: false
-    };
-  },
-  mounted() {
-    setTimeout(() => {
-      this.loaded = true;
-    }, 2000);
-  }
-}
+// export default {
+//   data() {
+//     return {
+//       loaded: false
+//     };
+//   },
+//   mounted() {
+//     setTimeout(() => {
+//       this.loaded = true;
+//     }, 2000);
+//   }
+// }
 </script>
 
 <style scoped>
-.loader {
+/* .loader {
   position: fixed;
   left: 0;
   top: 0;
@@ -47,6 +47,6 @@ export default {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
+} */
 </style>
 

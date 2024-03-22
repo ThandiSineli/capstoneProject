@@ -17,9 +17,9 @@
       Explore our range, and I'm sure you'll find the perfect match for your style. This is just the beginning of our journey together, and I'm excited about the upcoming launches that will elevate your hair game.
     </p>
     <p class="about-description">
-      Follow us [@YourBusinessName] to stay in the loop on all the latest updates and style inspiration. Thank you for choosing Tee’s Crown Haven—where beautiful hair begins!
+      Follow us our social media platforms to stay in the loop on all the latest updates and style inspiration. Thank you for choosing Tee’s Crown Haven—where beautiful hair begins!
     </p>
-    <p class="about-signature">Best, Thandeka & Thobela 💕</p>
+    <p class="about-signature">Best, Tee. 💕</p>
   </div>
 </template>
 

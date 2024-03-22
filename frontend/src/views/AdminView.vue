@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h>Products</h>
-    <table class="product-table">
-      
+    <h1 class="section-title">Manage Products</h1>
+    <table class="admin-table">
       <thead>
         <tr>
           <th>#</th>
@@ -19,33 +18,33 @@
           <td>{{ index + 1 }}</td>
           <td>
             <template v-if="!product.editing">{{ product.prodName }}</template>
-            <input v-else type="text" v-model="product.editedName">
+            <input v-else type="text" v-model="product.editedName" class="input-field">
           </td>
           <td>
             <template v-if="!product.editing">{{ product.quantity }}</template>
-            <input v-else type="number" v-model.number="product.editedQuantity">
+            <input v-else type="number" v-model.number="product.editedQuantity" class="input-field">
           </td>
           <td>
             <template v-if="!product.editing">R{{ product.amount }}</template>
-            <input v-else type="number" v-model.number="product.editedAmount">
+            <input v-else type="number" v-model.number="product.editedAmount" class="input-field">
           </td>
           <td>
             <template v-if="!product.editing">{{ product.producturl }}</template>
-            <input v-else type="text" v-model="product.editedImage">
+            <input v-else type="text" v-model="product.editedImage" class="input-field">
           </td>
           <td>
             <template v-if="!product.editing">{{ product.category }}</template>
-            <input v-else type="text" v-model="product.editedCategory">
+            <input v-else type="text" v-model="product.editedCategory" class="input-field">
           </td>
           <td>
-            <button v-if="!product.editing" @click="toggleEditMode(product)">Edit</button>
-            <button v-else @click="saveChanges(product)">Save</button>
-            <button @click="confirmDelete(product.iditems)">Delete</button>
+            <button v-if="!product.editing" @click="toggleEditMode(product)" class="action-button edit">Edit</button>
+            <button v-else @click="saveChanges(product)" class="action-button save">Save</button>
+            <button @click="confirmDelete(product.iditems)" class="action-button delete">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <h>Users</h>
+    <h2 class="section-title">Manage Users</h2>
     <user-view />
   </div>
 </template>
@@ -59,7 +58,7 @@ export default {
   components: {
     UserView,
   },
- data() {
+  data() {
     return {
       products: []
     };
@@ -74,9 +73,7 @@ export default {
       }
     },
     toggleEditMode(product) {
-      // Toggle editing mode for the clicked product
       product.editing = !product.editing;
-      // Initialize edited properties with current values
       product.editedName = product.prodName;
       product.editedQuantity = product.quantity;
       product.editedAmount = product.amount;
@@ -85,21 +82,17 @@ export default {
     },
     async saveChanges(product) {
       try {
-        // Send PUT request to update the product
         await axios.put(`https://capstoneproject-wv34.onrender.com/products/${product.iditems}`, {
           prodName: product.editedName,
           quantity: product.editedQuantity,
           amount: product.editedAmount,
           category: product.editedCategory
         });
-        // Update product data in the table
         product.prodName = product.editedName;
         product.quantity = product.editedQuantity;
         product.amount = product.editedAmount;
         product.category = product.editedCategory;
-        // Exit editing mode
         product.editing = false;
-        // Show success message
         Swal.fire({
           icon: 'success',
           title: 'Product updated successfully',
@@ -108,7 +101,6 @@ export default {
         });
       } catch (error) {
         console.error('Error saving changes:', error);
-        // Show error message
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -143,42 +135,39 @@ export default {
 </script>
 
 <style scoped>
-/* Your styles */
-.product-table {
+.section-title {
+  font-size: 24px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.admin-table {
   width: 100%;
   border-collapse: collapse;
+  margin-bottom: 20px;
 }
 
-.product-table th,
-.product-table td {
-  border: 1px solid #000;
-  padding: 8px;
-  color: #dd286d;
-}
-
-.product-table th {
-  background-color: #000;
+.admin-table th,
+.admin-table td {
+  padding: 12px;
   text-align: left;
+  border: 1px solid #ddd; /* Light gray border */
 }
 
-.product-table tr:nth-child(even) {
-  background-color: #000;
+.admin-table th {
+  background-color: #FF69B4; /* Pink background */
+  color: #FFF; /* White text color */
 }
 
-.product-table tr:hover {
-  background-color: #333;
+.admin-table td {
+  background-color: #fff; /* White background */
 }
 
-.product-table input[type="text"],
-.product-table input[type="number"] {
-  width: 100%;
-  padding: 6px 10px;
-  box-sizing: border-box;
+.zebra-stripe {
+  background-color: #f9f9f9; /* Light gray background for even rows */
 }
 
-button {
-  background-color: #FF69B4;
-  color: #fff;
+.action-button {
   padding: 8px 12px;
   border: none;
   border-radius: 4px;
@@ -186,7 +175,44 @@ button {
   margin-right: 4px;
 }
 
-button:hover {
-  background-color: #D84492;
+.action-button.edit {
+  background-color: #FF69B4; /* Pink background */
+  color: #FFF; /* White text color */
+}
+
+.action-button.save {
+  background-color: #009688; /* Green background */
+  color: #FFF; /* White text color */
+}
+
+.action-button.delete {
+  background-color: #000; /* Black background */
+  color: #FFF; /* White text color */
+}
+
+.action-button:hover {
+  opacity: 0.8;
+}
+
+.input-field {
+  width: 100%;
+  padding: 6px 10px;
+  box-sizing: border-box;
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 700px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .admin-table th,
+  .admin-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
 }
 </style>

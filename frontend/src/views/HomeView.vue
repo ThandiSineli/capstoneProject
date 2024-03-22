@@ -1,36 +1,16 @@
 <template>
-   <div>
-    <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://i.ibb.co/1nDcFX4/Photoroom-20240317-084805.jpg" class="d-block w-100" alt="Slide 1">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.pinimg.com/564x/82/c4/00/82c400d5be4fc129be4b92141472addd.jpg" class="d-block w-100" alt="Slide 2">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.pinimg.com/564x/cd/46/43/cd4643dfb0e94cab511c8551f463a6fa.jpg" class="d-block w-100" alt="Slide 3">
-        </div>
-       <div class="carousel-item">
-          <img src="https://i.pinimg.com/originals/f3/a5/06/f3a506b6312e4f2363297d1988f319b4.jpg" class="d-block w-100" alt="Slide 3">
-        </div>
-        <div class="carousel-item">
-          <img src="https://i.pinimg.com/originals/0c/da/41/0cda4161378319518c9550ccc41eac34.jpg" class="d-block w-100" alt="Slide 3">
-        </div>
+  <div>
+    <!-- Welcome Section with Background Image -->
+    <section class="welcome-section" :style="{ backgroundImage: 'url(https://i.pinimg.com/originals/19/15/90/191590ca3499087820152f91cb805b28.jpg)' }">
+      <div class="welcome-content">
+        <h1>Welcome to Our Store!</h1>
+        <p>We have everything you need for a magical shopping experience.</p>
+        <router-link to="/signup" class="signup-link">Sign Up Now</router-link>
       </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
+    </section>
 
-
-    <!-- Bestsellers-->
-    <div class="homepage">
+    <!-- Bestsellers Section -->
+    <section class="bestsellers-section">
       <h2 class="mb-4">Bestsellers</h2>
       <div class="product-grid">
         <div v-for="product in bestsellers.slice(0, 3)" :key="product.prodID" class="product-card">
@@ -38,14 +18,33 @@
             <div class="card">
               <img :src="product.producturl" alt="Product Image" class="card-img-top">
               <div class="card-body">
-              
-
+                <h5 class="card-title">{{ product.prodName }}</h5>
+                <p class="card-text">Price: R{{ product.amount }}</p>
               </div>
             </div>
           </router-link>
         </div>
       </div>
-    </div>
+    </section>
+
+    <!-- Carousel Section -->
+    <section class="carousel-section">
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div v-for="(slide, index) in carouselSlides" :key="index" :class="{ 'carousel-item': true, 'active': index === 0 }">
+            <img :src="slide.image" class="d-block w-100" :alt="'Slide ' + (index + 1)">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -54,52 +53,60 @@ export default {
   data() {
     return {
       carouselSlides: [
-        { image: 'https://cdn-thumbs.imagevenue.com/47/57/c9/ME17QP8X_t.png', alt: 'Slide 1' },
+        { image: 'https://i.pinimg.com/564x/82/c4/00/82c400d5be4fc129be4b92141472addd.jpg', alt: 'Slide 1' },
+        { image: 'https://i.pinimg.com/564x/cd/46/43/cd4643dfb0e94cab511c8551f463a6fa.jpg', alt: 'Slide 2' },
         // Add more slides as needed
       ],
     };
   },
   computed: {
     bestsellers() {
-      console.log('Bestsellers computed:', this.$store.state.products);
       return this.$store.state.products;
     },
   },
   mounted() {
-    console.log('Component mounted');
     this.$store.dispatch('fetchProducts');
   },
 };
 </script>
 
 <style scoped>
-#myCarousel {
-  width: 90%; 
-  margin: auto; 
+.welcome-section {
+  padding: 100px 0;
+  text-align: center;
+  color: white;
 }
 
-.carousel-inner {
-  height: 500px; 
+.welcome-section .welcome-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.bestsellers-section {
+  padding: 50px 0;
+}
+
+.carousel-section {
+  padding: 50px 0;
 }
 
 .carousel-item img {
-  width: 100%;
-  height: 600px;
- 
+  height: 400px;
 }
 
 .product-grid {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .product-card {
-  width: 1000%;
-  
+  width: 250px;
+  margin: 0 15px;
 }
 
 .card {
-  width: 50%;
-  border-radius: 8px;
+  border-radius: 15px;
   overflow: hidden;
   transition: transform 0.3s ease;
 }
@@ -110,7 +117,8 @@ export default {
 
 .card-img-top {
   width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover; /* Ensure the image covers the entire space */
 }
 
 .card-body {
@@ -124,5 +132,19 @@ export default {
 
 .card-text {
   margin-bottom: 0;
+}
+
+.signup-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #FF69B4;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.signup-link:hover {
+  background-color: #D84492;
 }
 </style>

@@ -20,36 +20,36 @@
           <td>{{ index + 1 }}</td>
           <td>
             <template v-if="!user.editing">{{ user.Firstname }}</template>
-            <input v-else type="text" v-model="user.editedFirstname">
+            <input v-else type="text" v-model="user.editedFirstname" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.Lastname }}</template>
-            <input v-else type="text" v-model="user.editedLastname">
+            <input v-else type="text" v-model="user.editedLastname" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.userage }}</template>
-            <input v-else type="number" v-model.number="user.editedAge">
+            <input v-else type="number" v-model.number="user.editedAge" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.Gender }}</template>
-            <input v-else type="text" v-model="user.editedGender">
+            <input v-else type="text" v-model="user.editedGender" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.userRole }}</template>
-            <input v-else type="text" v-model="user.editedRole">
+            <input v-else type="text" v-model="user.editedRole" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.emailAdd }}</template>
-            <input v-else type="email" v-model="user.editedEmail">
+            <input v-else type="email" v-model="user.editedEmail" class="input-field">
           </td>
           <td>
             <template v-if="!user.editing">{{ user.userPass }}</template>
-            <input v-else type="password" v-model="user.editedPassword">
+            <input v-else type="password" v-model="user.editedPassword" class="input-field">
           </td>
           <td><img :src="user.userProfile" alt="User Image" class="user-image"></td>
           <td>
-            <button v-if="!user.editing" @click="toggleEditMode(user)">Edit</button>
-            <button v-else @click="saveChanges(user)">Save</button>
+            <button v-if="!user.editing" @click="toggleEditMode(user)" class="action-button edit">Edit</button>
+            <button v-else @click="saveChanges(user)" class="action-button save">Save</button>
             <button class="delete-btn" @click="confirmDelete(user.idusers)">Delete</button>
           </td>
         </tr>
@@ -70,9 +70,7 @@ export default {
   },
   methods: {
     toggleEditMode(user) {
-      // Toggle editing mode for the clicked user
       user.editing = !user.editing;
-      // Initialize edited properties with current values
       user.editedFirstname = user.Firstname;
       user.editedLastname = user.Lastname;
       user.editedAge = user.userage;
@@ -83,7 +81,6 @@ export default {
     },
     async saveChanges(user) {
       try {
-        // Send PUT request to update the user
         await axios.put(`https://capstoneproject-wv34.onrender.com/users/${user.idusers}`, {
           Firstname: user.editedFirstname,
           Lastname: user.editedLastname,
@@ -93,7 +90,6 @@ export default {
           emailAdd: user.editedEmail,
           userPass: user.editedPassword
         });
-        // Update user data in the table
         user.Firstname = user.editedFirstname;
         user.Lastname = user.editedLastname;
         user.userage = user.editedAge;
@@ -101,9 +97,7 @@ export default {
         user.userRole = user.editedRole;
         user.emailAdd = user.editedEmail;
         user.userPass = user.editedPassword;
-        // Exit editing mode
         user.editing = false;
-        // Show success message
         Swal.fire({
           icon: 'success',
           title: 'User updated successfully',
@@ -112,7 +106,6 @@ export default {
         });
       } catch (error) {
         console.error('Error saving changes:', error);
-        // Show error message
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -124,7 +117,6 @@ export default {
       try {
         await axios.delete(`https://capstoneproject-wv34.onrender.com/users/${idusers}`);
         await this.fetchUsers();
-        // Show success message
         Swal.fire({
           icon: 'success',
           title: 'User deleted successfully',
@@ -133,7 +125,6 @@ export default {
         });
       } catch (error) {
         console.error('Error deleting user:', error);
-        // Show error message
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -151,11 +142,11 @@ export default {
     },
   },
   mounted() {
-    // Fetch users when the component is mounted
     this.fetchUsers();
   },
 };
 </script>
+
 
 
 <style scoped>
@@ -168,16 +159,20 @@ export default {
 .user-table td {
   padding: 12px;
   text-align: left;
-  border: 2px solid #FF69B4;
+  border: 1px solid #ddd; /* Light gray border */
 }
 
 .user-table th {
-  background-color: #000;
-  color: #FFF;
+  background-color: #FF69B4; /* Pink background */
+  color: #FFF; /* White text color */
+}
+
+.user-table td {
+  background-color: #fff; /* White background */
 }
 
 .zebra-stripe {
-  background-color: #FFF;
+  background-color: #f9f9f9; /* Light gray background for even rows */
 }
 
 .delete-btn {
@@ -186,11 +181,28 @@ export default {
   border: none;
   cursor: pointer;
   border-radius: 5px;
-  background-color: #000;
-  color: #FF69B4;
+  background-color: #FF69B4; /* Pink background */
+  color: #FFF; /* White text color */
 }
 
 .delete-btn:hover {
-  background-color: #D3D61F;
+  background-color: #D84492; /* Darker pink on hover */
+}
+
+/* Media queries for responsiveness */
+@media screen and (max-width: 700px) {
+  .user-table th,
+  .user-table td {
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .user-table th,
+  .user-table td {
+    padding: 6px;
+    font-size: 14px;
+  }
 }
 </style>
+

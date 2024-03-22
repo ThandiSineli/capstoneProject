@@ -1,7 +1,6 @@
 import { createStore } from "vuex";
 import axios from "axios";
 
-
 export default createStore({
   state: {
     admin: null,
@@ -9,12 +8,12 @@ export default createStore({
     users: null,
     token: null,
     error: null,
+    singleProduct: null,
     cart: [],
   },
-  getters: {},
   mutations: {
-    setProducts(state, data) {
-      state.products = data;
+    setProducts(state, products) {
+      state.products = products;
     },
     setAdmin(state, data) {
       state.admin = data;
@@ -28,6 +27,9 @@ export default createStore({
     setError(state, error) {
       state.error = error;
     },
+    setSingleProduct(state, product) {
+      state.singleProduct = product;
+    },
     addToCart(state, data) {
       state.cart.push(data);
       console.log('Item added to cart:', data); 
@@ -35,16 +37,22 @@ export default createStore({
     deleteProduct(state, iditems) {
       state.products = state.products.filter(product => product.iditems !== iditems);
     },
-    
   },
   actions: {
     async fetchProducts({ commit }) {
       try {
         const { data } = await axios.get('https://capstoneproject-wv34.onrender.com/products');
-        commit("setProducts", data);
+        commit('setProducts', data);
       } catch (error) {
         console.error('Error fetching products:', error);
-        throw error;
+      }
+    },
+    async fetchSingleProduct({ commit }, productId) {
+      try {
+        const { data } = await axios.get(`https://capstoneproject-wv34.onrender.com/products/${productId}`);
+        commit('setSingleProduct', data);
+      } catch (error) {
+        console.error('Error fetching single product:', error);
       }
     },
     async fetchUsers({ commit }) {
@@ -53,7 +61,6 @@ export default createStore({
         commit("setUsers", data);
       } catch (error) {
         console.error('Error fetching users:', error);
-        throw error;
       }
     },
     async deleteProduct({ commit }, iditems) {
@@ -62,10 +69,8 @@ export default createStore({
         commit("deleteProduct", prodID);
       } catch (error) {
         console.error('Error deleting product:', error);
-        throw error;
       }
     },
-    
     async loginUser({ commit }, user) {
       try {
         const response = await axios.post('https://capstoneproject-wv34.onrender.com/login', user, {
@@ -73,30 +78,19 @@ export default createStore({
             "Content-Type": "application/json",
           },
         });
-    
         const { token } = response.data;
-    
         if (!token) {
           throw new Error("Failed to login user.");
         }
-    
         localStorage.setItem("accessToken", token);
-    
         commit("setToken", token);
-    
         return token;
       } catch (error) {
         console.error('Error logging in user:', error);
-        throw error;
       }
     },
-    
-    
     addToCart({ commit }, data) {
       commit('addToCart', data);
     },
-  },
-
-  modules: {},
+  }
 });
- 

@@ -8,7 +8,7 @@ import loginView from '../views/loginView.vue';
 import userView from '../views/userView.vue';
 import CheckoutView from '../views/CheckoutView.vue';
 import SingleProductView from '../views/SingleView.vue';
-
+// import SingleProductView from '../views/SingleProductView.vue'
 
 const routes = [
   {
