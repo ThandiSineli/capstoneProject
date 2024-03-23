@@ -3,7 +3,7 @@
     <div v-if="cartItems.length === 0">Your cart is empty</div>
     <div v-else>
       <div v-for="(item, index) in cartItems" :key="index" class="cart-item">
-        <p>{{ item.name }}</p>
+        <p>{{ item.Prodname }}</p>
         <p>Quantity: {{ item.quantity }}</p>
         <p>Price: {{ item.price }}</p>
         <button @click="removeItem(index)">Remove</button>
