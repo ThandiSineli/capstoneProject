@@ -38,7 +38,7 @@ export default {
       }
     },
     calculateTotal() {
-      this.total = this.cartId.reduce((total, item) => total + (item.quantity * item.price), 0);
+      this.total = this.cartid.reduce((total, item) => total + (item.quantity * item.price), 0);
     },
     async removeItem(index) {
       try {
